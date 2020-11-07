@@ -4,7 +4,7 @@
 //
 //  Created by denis  on 15.10.2020.
 //  Copyright © 2020 denis . All rights reserved.
-//
+//2
 #include "items.hpp"
 Item::Item() {}
 Item::Item(int i) {
