@@ -10,7 +10,7 @@
 #include "units.h"
 #include <typeinfo>
 #include <vector>
-//дописать E_is_alive
+//дописать E_is_alive 1 12
 int main()
 {
     std::cout<<"Добро пожаловать в игру M\\W\\C "<<std::endl;
