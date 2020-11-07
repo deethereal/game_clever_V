@@ -19,7 +19,7 @@ int main()
     player.print_info();
     std::vector<std::string> test_list1 = {"bread"};
     std::vector<std::string> test_list2 = {"w_base"};
-    Enemy test_mob("гуманоид", 55, 32, "f", test_list1);
+    Enemy test_mob("гуманоид", 55, 32,10,20, "f", test_list1);
     std::string command="";
     while (command!="end" and player.is_alive())
     {
@@ -36,7 +36,9 @@ int main()
         else if (command == "info")
             player.print_info();
         else if (command=="fight")
-            player.damage(test_mob, player);
+        {
+            test_mob.E_is_alive(player.damage(test_mob, player));
+        }
         else if (command=="хп")
         {
             player.get_damage(20);

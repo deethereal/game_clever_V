@@ -26,11 +26,14 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(std::string race, int hp, int experience_, std::string type_drop, std::vector<std::string> drop_id_f,std::vector<std::string> drop_id_w, std::vector<std::string> drop_id_a )
+Enemy::Enemy(std::string race, int hp, int experience_,int power, int arm, std::string type_drop, std::vector<std::string> drop_id_f,std::vector<std::string> drop_id_w, std::vector<std::string> drop_id_a )
 {
     e_race= race;
+    MAX_HEALTH=hp;
     health = hp;
     experience=experience_;
+    p_ar.first.strength=power;
+    p_ar.second.protection=arm;
     bool we=false;
     bool ar=false;
     bool fo=false;
@@ -52,6 +55,32 @@ Enemy::Enemy(std::string race, int hp, int experience_, std::string type_drop, s
         if (fo)
              for (int i=0;i<drop_id_f.size();i++)
                 f_inv.push_back(food_list.find(drop_id_f[i])->second);
+}
+void Enemy::E_is_alive(int g_damage)
+{
+    get_damage(g_damage);
+    if (health<=0)
+    {
+        std::cout<<"цель мертва"<<std::endl;
+        if (e_race=="гуманоид" or e_race=="зверь" or e_race=="БОСС" or e_race=="нужить")
+        {
+            std::cout<<"drop"<<std::endl;
+            //mob_drop();
+        }
+        level.level_bar+=experience;
+        level.lvlup();
+        level.progress(experience);
+    }
+    else
+        std::cout<<"осталоcь "<<MAX_HEALTH-g_damage<<" здоровья"<<std::endl;
+}
+inventory Enemy::mob_drop()
+{
+    inventory loot_1;
+    loot_1.a_part=a_inv;
+    loot_1.f_part=f_inv;
+    loot_1.w_part=w_inv;
+    return loot_1;
 }
 Player::Player()
 {
@@ -178,22 +207,22 @@ void Unit::get_damage(int damage)
     health-=damage;
 }
 
-void Unit::damage(Unit target, Unit attacker)
+int Unit::damage(Unit target, Unit attacker)
 {
     int mhp=attacker.p_ar.first.strength;
     if (attacker.p_ar.first.type_of_dam == "физ")
     {
         mhp+=attacker.physic_damage;
-        target.get_damage(mhp-(target.p_ar.second.protection)/2);
-        std::cout<<"Цель получила "<<mhp-(target.p_ar.second.protection)/2<<" урона";
+        mhp=mhp-(target.p_ar.second.protection)/2;
+        std::cout<<"Цель получила "<<mhp<<" урона"<<std::endl;
     }
     else
     {
         mhp+=attacker.magic_damage;
-        target.get_damage(mhp-(target.p_ar.second.protection)/4);
-        std::cout<<"Цель получила "<<mhp-(target.p_ar.second.protection)/4<<" урона";
+        mhp=mhp-(target.p_ar.second.protection)/4;
+        std::cout<<"Цель получила "<<mhp<<" урона"<<std::endl;
     }
-    
+    return mhp;
 }
 void Player::drop_food(std::string name)
 {

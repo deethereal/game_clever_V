@@ -21,9 +21,19 @@ struct level
             level_bar-=100;
         }
     }
+    void progress(int count){
+        std::cout<<"Вы получили "<<count<<" опыта"<<std::endl;
+        std::cout<<"Ваш текущий уровень: "<<level<<std::endl;
+        std::cout<<"До следующего уровня: "<<level_bar<<"/100"<<std::endl;
+    }
 };
 
-
+struct inventory
+{
+    std::vector<Food> f_part;
+    std::vector<Armor> a_part;
+    std::vector<Weapon> w_part;
+};
 class Unit
 {
 protected:
@@ -43,7 +53,7 @@ protected:
     level level;
 public:
     void get_damage(int damage);
-    void damage(Unit target, Unit attacker);
+    int damage(Unit target, Unit attacker);
     std::string clas;
     Unit();
     int pray();
@@ -94,8 +104,9 @@ protected:
     int experience;
 public:
     Enemy();
-    Enemy(std::string race, int hp, int experience_, std::string type_drop, std::vector<std::string> drop_id_f={"1"}, std::vector<std::string> drop_id_w={"1"}, std::vector<std::string> drop_id_a={"1"});
-    void E_is_alive();
+    Enemy(std::string race, int hp, int experience_,int power, int arm, std::string type_drop, std::vector<std::string> drop_id_f={"1"}, std::vector<std::string> drop_id_w={"1"}, std::vector<std::string> drop_id_a={"1"});
+    void E_is_alive(int g_damage);
+    inventory mob_drop();
     ~Enemy();
 };
 
