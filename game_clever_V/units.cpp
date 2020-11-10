@@ -62,7 +62,7 @@ void Player::otladka_goloda()
 }
 void Enemy::E_is_alive(int g_damage)
 {
-    //get_damage(g_damage);
+
     if (health<=0)
     {
         std::cout<<"цель мертва"<<std::endl;
@@ -74,6 +74,7 @@ void Enemy::E_is_alive(int g_damage)
         level.level_bar+=experience;
         level.lvlup();
         level.progress(experience);
+        this->~Enemy(); //?
     }
     else
         std::cout<<"осталоcь "<<MAX_HEALTH-g_damage<<" здоровья"<<std::endl;
