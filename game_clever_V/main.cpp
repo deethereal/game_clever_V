@@ -10,7 +10,7 @@
 #include "units.h"
 #include <typeinfo>
 #include <vector>
-//дописать E_is_alive 1 12
+//дописать E_is_alive, сделать дроп вещей
 int main()
 {
     std::cout<<"Добро пожаловать в игру M\\W\\C "<<std::endl;
@@ -21,6 +21,7 @@ int main()
     std::vector<std::string> test_list2 = {"w_base"};
     Enemy test_mob("гуманоид", 55, 32,10,20, "f", test_list1);
     std::string command="";
+    std::cout<<std::endl;
     while (command!="end" and player.is_alive())
     {
         std::cin>>command;
@@ -29,8 +30,14 @@ int main()
             if(player.healing(player.pray(0)))
                 player.fatigue();
         }
-        else if (command =="хлеб")
-                player.have_a_dinner(command);
+        else if (command =="поесть")
+        {
+            std::cout<<"что вы хотите съесть?"<<std::endl;
+            player.print_invetory();
+            std::string snack;
+            std::cin>>snack;
+            player.have_a_dinner(snack);
+        }
         else if (command == "выкинуть")
             player.drop_food("хлеб");
         else if (command == "info")
@@ -38,11 +45,14 @@ int main()
         else if (command=="fight")
         {
             test_mob.E_is_alive(player.damage(test_mob, player));
+            player.fatigue();
         }
         else if (command=="хп")
         {
             player.get_damage(20);
         }
+        else if (command=="голод")
+            player.otladka_goloda();
         else
             std::cout<<"Такой команды нет, введите другую"<<std::endl;
     }

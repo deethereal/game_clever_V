@@ -56,6 +56,10 @@ Enemy::Enemy(std::string race, int hp, int experience_,int power, int arm, std::
              for (int i=0;i<drop_id_f.size();i++)
                 f_inv.push_back(food_list.find(drop_id_f[i])->second);
 }
+void Player::otladka_goloda()
+{
+    hunger-=20;
+}
 void Enemy::E_is_alive(int g_damage)
 {
     //get_damage(g_damage);
@@ -195,12 +199,12 @@ bool Player::is_alive()
 bool Player::is_hungry()
 {
     if (hunger>=-100)
-        return true;
-    if (hunger==-80)
+        return false;
+    if (hunger<=-80)
         std::cout<<"Вы начинаете голодать"<<std::endl;
     std::cout<<"Вы голодны"<<std::endl;
     health-=10;
-    return false;
+    return true;
 }
 void Unit::get_damage(int damage)
 {
@@ -291,8 +295,7 @@ void Player::add_item(Armory item)
 void Player::fatigue()
 {
     hunger--;
-    if (is_hungry())
-        health--;
+    is_hungry();
 }
 void Player::print_invetory()
 {
@@ -368,8 +371,7 @@ void Player::have_a_dinner(std::string name) //добавить уход вес�
             std::cout<<"Вы не голодны"<<std::endl;
             return;
             }
-    else
-        std::cout<<"У вас нет такого предмета в инвентаре"<<std::endl;
+    std::cout<<"У вас нет такого предмета в инвентаре"<<std::endl;
 }
 
 void Player::print_info()

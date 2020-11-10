@@ -56,7 +56,6 @@ public:
     int damage(Unit& target, Unit& attacker);
     std::string clas;
     Unit();
-    int pray();
     
     ~Unit();
 };
@@ -67,7 +66,6 @@ protected:
     int max_carrying;
     float p_mult=0;
     int hunger;
-    void print_invetory();
     void add_item(Armory item);
     void add_food(Food snack);
     Armor p_armor;
@@ -77,7 +75,9 @@ protected:
     
 public:
     Player();
+    void print_invetory();
     void fatigue();
+    void otladka_goloda();
     void print_info();
     bool is_alive();
     bool is_hungry();
