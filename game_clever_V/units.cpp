@@ -58,11 +58,11 @@ Enemy::Enemy(std::string race, int hp, int experience_,int power, int arm, std::
 }
 void Enemy::E_is_alive(int g_damage)
 {
-    get_damage(g_damage);
+    //get_damage(g_damage);
     if (health<=0)
     {
         std::cout<<"цель мертва"<<std::endl;
-        if (e_race=="гуманоид" or e_race=="зверь" or e_race=="БОСС" or e_race=="нужить")
+        if (e_race=="гуманоид" or e_race=="зверь" or e_race=="БОСС" or e_race=="нeжить")
         {
             std::cout<<"drop"<<std::endl;
             //mob_drop();
@@ -207,21 +207,24 @@ void Unit::get_damage(int damage)
     health-=damage;
 }
 
-int Unit::damage(Unit target, Unit attacker)
+int Unit::damage(Unit& target, Unit& attacker)
 {
     int mhp=attacker.p_ar.first.strength;
     if (attacker.p_ar.first.type_of_dam == "физ")
     {
         mhp+=attacker.physic_damage;
         mhp=mhp-(target.p_ar.second.protection)/2;
+        target.get_damage(mhp);
         std::cout<<"Цель получила "<<mhp<<" урона"<<std::endl;
     }
     else
     {
         mhp+=attacker.magic_damage;
         mhp=mhp-(target.p_ar.second.protection)/4;
+        target.get_damage(mhp);
         std::cout<<"Цель получила "<<mhp<<" урона"<<std::endl;
     }
+    
     return mhp;
 }
 void Player::drop_food(std::string name)

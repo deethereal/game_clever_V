@@ -40,7 +40,7 @@ protected:
     std::string gender;
     std::string name;
     std::string p_race;
-    std::string race[8] = {"орк", "эльф", "человек", "дворф", "тролль", "гоблин", "дракор", "каджит"};
+    std::string race[8] = {"орк", "эльф", "человек", "дворф", "тролль", "гоблин", "дракон", "каджит"};
     int health;
     int MAX_HEALTH;
     int armor;
@@ -53,7 +53,7 @@ protected:
     level level;
 public:
     void get_damage(int damage);
-    int damage(Unit target, Unit attacker);
+    int damage(Unit& target, Unit& attacker);
     std::string clas;
     Unit();
     int pray();
