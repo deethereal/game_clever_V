@@ -26,9 +26,9 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(std::string race, int hp, int experience_,int power, int arm, std::string type_drop, std::vector<std::string> drop_id_f,std::vector<std::string> drop_id_w, std::vector<std::string> drop_id_a )
+Enemy::Enemy(std::string race1, int hp, int experience_, int power, int arm, std::string type_drop, std::vector<std::string> drop_id_f, std::vector<int> f_count, std::vector<std::string> drop_id_w, std::vector<int> w_count, std::vector<std::string> drop_id_a, std::vector<int> a_count)
 {
-    e_race= race;
+    race = race1;
     MAX_HEALTH=hp;
     health = hp;
     experience=experience_;
@@ -48,43 +48,62 @@ Enemy::Enemy(std::string race, int hp, int experience_,int power, int arm, std::
             }
         if (we)
             for (int i=0;i<drop_id_w.size();i++)
-                w_inv.push_back(weapon.find(drop_id_w[i])->second);
+            {
+                e_inv.w_part.push_back(weapon.find(drop_id_w[i])->second);
+                e_inv.w_part.back().count=w_count[i];
+            }
         if (ar)
             for (int i=0;i<drop_id_a.size();i++)
-                a_inv.push_back(armory.find(drop_id_a[i])->second);
+            {
+                e_inv.a_part.push_back(armory.find(drop_id_a[i])->second);
+                e_inv.a_part.back().count=a_count[i];
+            }
         if (fo)
              for (int i=0;i<drop_id_f.size();i++)
-                f_inv.push_back(food_list.find(drop_id_f[i])->second);
+            {
+                e_inv.f_part.push_back(food_list.find(drop_id_f[i])->second);
+                e_inv.f_part.back().count=f_count[i];
+            }
 }
 void Player::otladka_goloda()
 {
     hunger-=20;
 }
-void Enemy::E_is_alive(int g_damage)
+bool Enemy::hp_positive()
 {
+    if (health>0)
+        return true;
+    else
+        return false;
+}
 
+inventory Enemy::E_is_alive(int g_damage)
+{
+    inventory temp;
     if (health<=0)
     {
         std::cout<<"цель мертва"<<std::endl;
-        if (e_race=="гуманоид" or e_race=="зверь" or e_race=="БОСС" or e_race=="нeжить")
-        {
-            std::cout<<"drop"<<std::endl;
-            //mob_drop();
-        }
         level.level_bar+=experience;
         level.lvlup();
         level.progress(experience);
-        this->~Enemy(); //?
+        if (race=="гуманоид" or race=="зверь" or race=="БОСС" or race=="нeжить")
+        {
+            std::cout<<"Из моба выпало"<<std::endl;
+            temp=mob_drop();
+        }
+        this->~Enemy();
+
     }
     else
         std::cout<<"осталоcь "<<MAX_HEALTH-g_damage<<" здоровья"<<std::endl;
+    return temp;
 }
 inventory Enemy::mob_drop()
 {
     inventory loot_1;
-    loot_1.a_part=a_inv;
-    loot_1.f_part=f_inv;
-    loot_1.w_part=w_inv;
+    loot_1.a_part=e_inv.a_part;
+    loot_1.f_part=e_inv.f_part;
+    loot_1.w_part=e_inv.w_part;
     return loot_1;
 }
 Player::Player()
@@ -106,7 +125,7 @@ Player::Player()
     std::cin>>gender;
     std::cout<<"Выберите расу"<<std::endl;
     for(int i=0;i<8;i++)
-        std::cout<<race[i]<<" ";
+        std::cout<<races[i]<<" ";
     std::cout<<std::endl;
     std::string mb_race;
     int temp = -1;
@@ -114,7 +133,7 @@ Player::Player()
     {
     std::cin>>mb_race;
     for(int i=0;i<8;i++)
-        if (mb_race == race[i])
+        if (mb_race == races[i])
         {
             temp=1;
             break;
@@ -122,23 +141,23 @@ Player::Player()
     if (temp==-1)
         std::cout<<"Это не являтеся расой, выберите одну из предложенных"<<std::endl;
     }
-    p_race=mb_race;
-    if (p_race=="дракон")
+    race=mb_race;
+    if (race=="дракон")
         MAX_HEALTH=120; //поменять в хилинг!!!!
     else
         MAX_HEALTH=100;
     health=MAX_HEALTH;
-    if (p_race=="дворф")
+    if (race=="дворф")
         armor=10;
     else
         armor=0;
-    if (p_race=="гоблин")
+    if (race=="гоблин")
         money = 50;
-    if (p_race=="орк")
+    if (race=="орк")
         physic_damage+=3;
-    if (p_race=="эльф")
+    if (race=="эльф")
         magic_damage+=3;
-    if (p_race=="троль")
+    if (race=="троль")
         p_mult=0.1;
     else
         money=5;
@@ -174,7 +193,7 @@ Player::Player()
         p_ar.second=armory.find("c_base")->second;
     }
     std::cout<<typeid(a_bag[0]).name()<<std::endl;
-    if (p_race=="каджит")
+    if (race=="каджит")
         add_food(food_list.find("bread")->second);
     add_food(food_list.find("bread")->second);
 }
@@ -381,7 +400,7 @@ void Player::print_info()
     std::cout<<"Класс: "<<clas<<std::endl;
     std::cout<<"Имя: "<<name<<std::endl;
     std::cout<<"Гендep: "<<gender<<std::endl;
-    std::cout<<"Раса: "<<p_race<<std::endl;
+    std::cout<<"Раса: "<<race<<std::endl;
     std::cout<<"Здоровье: "<<health<<std::endl;
     std::cout<<"Оружие: "<<p_ar.second.name<<std::endl;
     std::cout<<"Уровень: "<<level.level<<std::endl;

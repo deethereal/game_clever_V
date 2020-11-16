@@ -33,14 +33,42 @@ struct inventory
     std::vector<Food> f_part;
     std::vector<Armor> a_part;
     std::vector<Weapon> w_part;
+    void show()
+    {
+        int i=0;
+        std::cout<<"Из еды у него было: "<<std::endl;
+        while (i<f_part.size()) {
+            std::cout<<f_part[i].count<<" "<<f_part[i].name<<" ";
+            i++;
+        }
+        std::cout<<"\n";
+        i=0;
+        std::cout<<"Из оружия у него было: "<<std::endl;
+        while (i<w_part.size()) {
+            std::cout<<w_part[i].count<<" "<<w_part[i].name<<" ";
+            i++;
+        }
+        std::cout<<"\n";
+        i=0;
+        std::cout<<"Из снаряжения у него было: "<<std::endl;
+        while (i<a_part.size()) {
+            std::cout<<a_part[i].count<<" "<<a_part[i].name<<" ";
+            i++;
+        }
+        std::cout<<"\n";
+    }
+    unsigned long is_empty()
+    {
+        return f_part.size()+a_part.size()+w_part.size();
+    }
 };
 class Unit
 {
 protected:
     std::string gender;
     std::string name;
-    std::string p_race;
-    std::string race[8] = {"орк", "эльф", "человек", "дворф", "тролль", "гоблин", "дракон", "каджит"};
+    std::string race;
+    std::string races[8] = {"орк", "эльф", "человек", "дворф", "тролль", "гоблин", "дракон", "каджит"};
     int health;
     int MAX_HEALTH;
     int armor;
@@ -96,17 +124,16 @@ class fNPC: public Unit
 class Enemy: public Unit
 {
 protected:
-    std::string notp_race[6]={"гуманоид", "паук", "зверь", "чудище", "БОСС","нежить"};
-    std::string e_race;
-    std::vector<Food> f_inv;
-    std::vector<Armor> a_inv;
-    std::vector<Weapon> w_inv;
+    //std::string notp_race[6]={"гуманоид", "паук", "зверь", "чудище", "БОСС","нежить"};
+    inventory e_inv;
     int experience;
+    inventory mob_drop();
 public:
     Enemy();
-    Enemy(std::string race, int hp, int experience_,int power, int arm, std::string type_drop, std::vector<std::string> drop_id_f={"1"}, std::vector<std::string> drop_id_w={"1"}, std::vector<std::string> drop_id_a={"1"});
-    void E_is_alive(int g_damage);
-    inventory mob_drop();
+    Enemy(std::string race1, int hp, int experience_, int power, int arm, std::string type_drop, std::vector<std::string> drop_id_f={"1"}, std::vector<int> f_count={1}, std::vector<std::string> drop_id_w={"1"}, std::vector<int> w_count={1},
+        std::vector<std::string> drop_id_a={"1"}, std::vector<int> a_count={1});
+    inventory E_is_alive(int g_damage);
+    bool hp_positive();
     ~Enemy();
 };
 
