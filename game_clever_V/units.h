@@ -111,6 +111,8 @@ public:
     bool is_hungry();
     void drop_food(std::string name);
     void have_a_dinner(std::string name);
+    void take_items(inventory from);
+    
     bool healing(int count);
     int pray(int target);  //target = 1, если враг,target= 0, если персонаж
     ~Player();

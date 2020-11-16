@@ -251,6 +251,7 @@ int Unit::damage(Unit& target, Unit& attacker)
     
     return mhp;
 }
+
 void Player::drop_food(std::string name)
 {
     for (int i=0;i<f_bag.size();i++)
@@ -340,6 +341,25 @@ bool Player::healing(int count)
     return false;
     
 }
+void Player::take_items(inventory from)
+{
+    for (int i=0;i<from.f_part.size();i++)
+    {
+        for (int j=0;j<from.f_part[i].count;j++)
+            add_food(from.f_part[i]);
+    }
+    for (int i=0;i<from.a_part.size();i++)
+    {
+        for (int j=0;j<from.a_part[i].count;j++)
+            add_item(from.a_part[i]);
+    }
+    for (int i=0;i<from.w_part.size();i++)
+    {
+        for (int j=0;j<from.w_part[i].count;j++)
+            add_item(from.w_part[i]);
+    }
+    print_invetory();
+}
 void Player::add_food(Food snack)
 {
     for (int i=0;i<f_bag.size();i++)
@@ -349,6 +369,7 @@ void Player::add_food(Food snack)
             {
                 carrying-=snack.Food::weight;
                 f_bag[i].count++;
+                
                 return;
             }
             else

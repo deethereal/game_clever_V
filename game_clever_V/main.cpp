@@ -10,6 +10,34 @@
 #include "units.h"
 #include <typeinfo>
 #include <vector>
+std::vector<std::pair<std::string, int>> string_split(std::string S) //разделял по ","
+{
+    std::vector<std::pair<std::string, int>> result;
+    std::string word="";
+    int count_i=0;
+    int i=0;
+    while (i<S.size())
+    {
+        while (S[i]!='-')
+        {
+            word+=S[i];
+            i++;
+        }
+        
+        i++;
+        while(S[i]!=',' and i<S.size())
+        {
+            count_i=10*count_i + (int)S[i]-'0';
+            i++;
+        }
+        result.push_back(make_pair(word,count_i));
+        word="";
+        count_i=0;
+        i++;
+        
+    }
+    return result;
+}
 //дописать E_is_alive, сделать дроп вещей
 int main()
 {
@@ -51,7 +79,50 @@ int main()
                 {
                     std::cout<<"цель мертва"<<std::endl;
                     mob_drop.show();
-                    //класть вещи в инветарь
+                    std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать))"<<std::endl;
+                    std::string input;
+                    std::cin>>input;
+                    std::vector<std::pair<std::string, int>> inv = string_split(input);
+                    bool cheat=false;
+                    int j=0;
+                    while (j< inv.size() and not cheat)
+                    {
+                        int i=0;
+                        while (i<mob_drop.f_part.size() and (not cheat))
+                        {
+                            if ((mob_drop.f_part[i].name==inv[j].first) and (mob_drop.f_part[i].count<inv[j].second))
+                            {
+                                std::cout<<"Обманывать плохо! Вы остались без вещей!\n";
+                                cheat=true;
+                            }
+                            i++;
+                        }
+                        i=0;
+                        while (i<mob_drop.a_part.size() and (not cheat))
+                        {
+                            if ((mob_drop.a_part[i].name==inv[j].first) and (mob_drop.a_part[i].count<inv[j].second))
+                            {
+                                std::cout<<"Обманывать плохо! Вы остались без вещей!\n";
+                                cheat=true;
+                            }
+                            i++;
+                        }
+                        i=0;
+                        while (i<mob_drop.w_part.size() and (not cheat))
+                        {
+                            if ((mob_drop.w_part[i].name==inv[j].first) and (mob_drop.w_part[i].count<inv[j].second))
+                            {
+                                std::cout<<"Обманывать плохо! Вы остались без вещей!\n";
+                                cheat=true;
+                            }
+                            i++;
+                        }
+
+                    
+                    }
+                    if (not cheat)
+                        std::cout<<"Дописать, чтобы вещи можно было класть!!!";
+                    //класть вещи в инветарь, есть функция take_items в units.cpp
                 }
                 player.fatigue();
             }
@@ -67,5 +138,6 @@ int main()
         else
             std::cout<<"Такой команды нет, введите другую"<<std::endl;
     }
+    
     return 0;
 }
