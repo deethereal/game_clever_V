@@ -98,14 +98,7 @@ inventory Enemy::E_is_alive(int g_damage)
         std::cout<<"осталоcь "<<MAX_HEALTH-g_damage<<" здоровья"<<std::endl;
     return temp;
 }
-inventory Enemy::mob_drop()
-{
-    inventory loot_1;
-    loot_1.a_part=e_inv.a_part;
-    loot_1.f_part=e_inv.f_part;
-    loot_1.w_part=e_inv.w_part;
-    return loot_1;
-}
+
 Player::Player()
 {
     std::cout<<"Введите класс: маг/воин/клерик "<<std::endl;

@@ -8,14 +8,20 @@
 
 #include <stdio.h>
 #include "units.h"
+#include <iostream>
+#include "units.h"
 #include "items.hpp"
+#include <map>
+
+extern std::map <std::string, Food> food_list;
+extern std::map <std::string, Armor> armory;
+extern std::map <std::string, Weapon> weapon;
 void Player::drop_food(std::string name)
 {
     for (int i=0;i<f_bag.size();i++)
            if (name==f_bag[i].name)
            {
                std::cout<<"Введите количество, которое хотите выкинуть: N/MAX"<<std::endl;
-               // ДОПИСАТЬ ВЕСА ДЛЯ ВЕЩЕЙ И ПЕРЕГРУЗ ЧЕЛИКА
                std::string counter;
                std::cin>>counter;
                if (counter=="MAX")
@@ -117,4 +123,37 @@ void Player::add_food(Food snack)
     return;
     
 }
-
+inventory Enemy::mob_drop()
+{
+    inventory loot_1;
+    loot_1.a_part=e_inv.a_part;
+    loot_1.f_part=e_inv.f_part;
+    loot_1.w_part=e_inv.w_part;
+    return loot_1;
+}
+inventory Unit::create_inv(std::vector<std::pair<std::string, int>> items_list)
+{
+    inventory loot_1;
+    for (int i=0;i<items_list.size();i++)
+        {
+            auto search1 = food_list.find(items_list[i].first);
+            if (search1 != food_list.end())
+            {
+                loot_1.f_part.push_back(search1->second);
+                loot_1.f_part.back().count+=items_list[i].second;
+            }
+            auto search2 = weapon.find(items_list[i].first);
+            if (search2 != weapon.end())
+            {
+                loot_1.w_part.push_back(search2->second);
+                loot_1.w_part.back().count+=items_list[i].second;
+            }
+            auto search3 = armory.find(items_list[i].first);
+            if (search3 != armory.end())
+            {
+                loot_1.a_part.push_back(search3->second);
+                loot_1.a_part.back().count+=items_list[i].second;
+            }
+        }
+    return loot_1;
+}

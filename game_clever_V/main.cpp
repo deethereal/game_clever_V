@@ -83,6 +83,7 @@ int main()
                     std::string input;
                     std::cin>>input;
                     std::vector<std::pair<std::string, int>> inv = string_split(input);
+                    //проверка на читерство началась(смотрим, что человек взял не больше вещей, чем можно)
                     bool cheat=false;
                     int j=0;
                     while (j< inv.size() and not cheat)
@@ -120,9 +121,10 @@ int main()
 
                     
                     }
+                    //проверка на читерство кончилась
                     if (not cheat)
-                        std::cout<<"Дописать, чтобы вещи можно было класть!!!";
-                    //класть вещи в инветарь, есть функция take_items в units.cpp
+                        player.take_items( player.create_inv(inv));
+                    //дописать повтор,  пока не закончит класть
                 }
                 player.fatigue();
             }

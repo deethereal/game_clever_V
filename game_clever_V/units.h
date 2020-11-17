@@ -80,6 +80,7 @@ protected:
     std::pair<Weapon, Armor> p_ar;
     level level;
 public:
+    inventory create_inv(std::vector<std::pair<std::string, int>> items_list);
     void get_damage(int damage);
     int damage(Unit& target, Unit& attacker);
     std::string clas;
