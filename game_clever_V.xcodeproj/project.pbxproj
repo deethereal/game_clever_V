@@ -10,6 +10,7 @@
 		92BE40382556C5A500837D44 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92BE40372556C5A500837D44 /* main.cpp */; };
 		92BE40402556C82300837D44 /* items.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92BE403E2556C82200837D44 /* items.cpp */; };
 		92BE40432556C83400837D44 /* units.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92BE40412556C83400837D44 /* units.cpp */; };
+		92DBEB862563C4980057BB94 /* items_functions.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92DBEB852563C4980057BB94 /* items_functions.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,7 @@
 		92BE403F2556C82300837D44 /* items.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = items.hpp; sourceTree = "<group>"; };
 		92BE40412556C83400837D44 /* units.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = units.cpp; sourceTree = "<group>"; };
 		92BE40422556C83400837D44 /* units.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = units.h; sourceTree = "<group>"; };
+		92DBEB852563C4980057BB94 /* items_functions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = items_functions.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 				92BE403F2556C82300837D44 /* items.hpp */,
 				92BE40412556C83400837D44 /* units.cpp */,
 				92BE40422556C83400837D44 /* units.h */,
+				92DBEB852563C4980057BB94 /* items_functions.cpp */,
 			);
 			path = game_clever_V;
 			sourceTree = "<group>";
@@ -99,7 +102,7 @@
 		92BE402C2556C5A500837D44 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = "denis ";
 				TargetAttributes = {
 					92BE40332556C5A500837D44 = {
@@ -132,6 +135,7 @@
 			files = (
 				92BE40432556C83400837D44 /* units.cpp in Sources */,
 				92BE40402556C82300837D44 /* items.cpp in Sources */,
+				92DBEB862563C4980057BB94 /* items_functions.cpp in Sources */,
 				92BE40382556C5A500837D44 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -165,6 +169,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -223,6 +228,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -251,6 +257,7 @@
 		92BE403C2556C5A500837D44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -259,6 +266,7 @@
 		92BE403D2556C5A500837D44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
