@@ -10,6 +10,7 @@
 #include "units.h"
 #include <typeinfo>
 #include <vector>
+
 std::vector<std::pair<std::string, int>> string_split(std::string S) //разделял по ","
 {
     std::vector<std::pair<std::string, int>> result;
@@ -45,11 +46,23 @@ int main()
     std::cout<<"Каждое действие стоит 1 еду (кроме еды)"<<std::endl<<"Когда у вас кончится еда, вы начнете получать по 10 урона в ход"<<std::endl;
     Player player;
     player.print_info();
-    std::vector<std::string> test_list1 = {"bread"};
+    std::vector<std::string> test_list1 = {"хлеб"};
     std::vector<std::string> test_list2 = {"w_base"};
     Enemy test_mob("гуманоид", 55,32,10,20, "f", test_list1);
     std::string command="";
     std::cout<<std::endl;
+    std::cout<<"Вы просыпаетесь без памяти, единтсвенное, что вы помните, что вам надо найти \"Амулет Счастья\" и имя \"Тенурион\". \n Вы находите местного жителя, и он рассказывает вам легенду о Тенурионе, который носит тот самый Амулет, указывает направление.\nВы готовы отправиться в путь?\n";
+    std::string answer;
+    std::cin>>answer;
+    if (answer=="y")
+        std::cout<<"Я всегда знал, что ты смелый\n";
+    else
+        std::cout<<"Это был риторический вопрос\n";
+    
+    std::cout<<"День первый\n";
+    
+    //написать лор
+    std::cout<<"На пути вы встречаете маленькомго монстра, похожего на гном, у него 55 здоровья, 10 атаки и 20 брони, хотите с ним драться? y/n";
     while (command!="end" and player.is_alive())
     {
         std::cin>>command;
@@ -74,14 +87,23 @@ int main()
         {
             if (test_mob.hp_positive())
             {
-                inventory mob_drop = test_mob.E_is_alive(player.damage(test_mob, player));
+                inventory mob_drop = test_mob.E_is_alive(player.damage(test_mob, player),player);
                 if (mob_drop.is_empty()!=0)
                 {
+                    std::string input="";
+                    while (input!="-1")
+                    {
                     std::cout<<"цель мертва"<<std::endl;
                     mob_drop.show();
-                    std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать))"<<std::endl;
-                    std::string input;
+                    std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или /info"<<std::endl;
                     std::cin>>input;
+                    while (input=="/info")
+                    {
+                        player.print_info();
+                        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или /info"<<std::endl;
+                        std::cin>>input;
+                    }
+
                     std::vector<std::pair<std::string, int>> inv = string_split(input);
                     //проверка на читерство началась(смотрим, что человек взял не больше вещей, чем можно)
                     bool cheat=false;
@@ -119,12 +141,19 @@ int main()
                             i++;
                         }
 
-                    
+                        j++;
                     }
                     //проверка на читерство кончилась
                     if (not cheat)
-                        player.take_items( player.create_inv(inv));
-                    //дописать повтор,  пока не закончит класть
+                    {
+                        inventory temp=player.create_inv(inv);
+                        player.take_items(temp);
+                        std::cout<<"\n";
+                        delete_it(mob_drop, temp);
+                    }
+                    else
+                        input="-1";
+                }
                 }
                 player.fatigue();
             }

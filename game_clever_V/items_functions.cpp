@@ -16,6 +16,24 @@
 extern std::map <std::string, Food> food_list;
 extern std::map <std::string, Armor> armory;
 extern std::map <std::string, Weapon> weapon;
+
+void delete_it(inventory& from, inventory what)
+{
+    for (int i=0;i<from.f_part.size();i++)
+        for (int j=0;j<what.f_part.size();j++)
+            if (what.f_part[i].name==from.f_part[j].name)
+                from.f_part[j].count-=what.f_part[i].count;
+    for (int i=0;i<from.a_part.size();i++)
+        for (int j=0;j<what.a_part.size();j++)
+            if (what.a_part[i].name==from.a_part[j].name)
+                from.a_part[j].count-=what.a_part[i].count;
+    for (int i=0;i<from.w_part.size();i++)
+        for (int j=0;j<what.w_part.size();j++)
+            if (what.w_part[i].name==from.w_part[j].name)
+                from.w_part[j].count-=what.w_part[i].count;
+}
+
+
 void Player::drop_food(std::string name)
 {
     for (int i=0;i<f_bag.size();i++)

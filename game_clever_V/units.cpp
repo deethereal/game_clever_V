@@ -16,7 +16,7 @@
 
 std::map <std::string, Armor> armory = {{"c_base", Armor(2)}, {"m_base", Armor(1)}, {"w_base", Armor(0)}};
 std::map <std::string, Weapon> weapon = {{"c_base", Weapon(2)}, {"m_base", Weapon(1)}, {"w_base", Weapon(0)}};
-std::map <std::string, Food> food_list={{"bread", Food(0,0,0)} };
+std::map <std::string, Food> food_list={{"хлеб", Food(0,0,0)} };
 
 
 Unit::Unit()
@@ -77,15 +77,15 @@ bool Enemy::hp_positive()
         return false;
 }
 
-inventory Enemy::E_is_alive(int g_damage)
+inventory Enemy::E_is_alive(int g_damage, Player& p)
 {
     inventory temp;
     if (health<=0)
     {
         std::cout<<"цель мертва"<<std::endl;
-        level.level_bar+=experience;
-        level.lvlup();
-        level.progress(experience);
+        p.level.level_bar+=experience;
+        p.level.lvlup();
+        p.level.progress(experience);
         if (race=="гуманоид" or race=="зверь" or race=="БОСС" or race=="нeжить")
         {
             std::cout<<"Из моба выпало"<<std::endl;
@@ -187,8 +187,8 @@ Player::Player()
     }
     std::cout<<typeid(a_bag[0]).name()<<std::endl;
     if (race=="каджит")
-        add_food(food_list.find("bread")->second);
-    add_food(food_list.find("bread")->second);
+        add_food(food_list.find("хлеб")->second);
+    add_food(food_list.find("хлеб")->second);
 }
 int Player::pray(int target)
 {

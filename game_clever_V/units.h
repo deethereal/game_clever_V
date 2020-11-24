@@ -9,6 +9,9 @@
 #include <vector>
 #ifndef units_h
 #define units_h
+
+
+
 struct level
 {
     int level;
@@ -62,6 +65,9 @@ struct inventory
         return f_part.size()+a_part.size()+w_part.size();
     }
 };
+
+void delete_it(inventory& from, inventory what);
+
 class Unit
 {
 protected:
@@ -78,7 +84,7 @@ protected:
     int magic_damage=20;
     int physic_damage=0;
     std::pair<Weapon, Armor> p_ar;
-    level level;
+  
 public:
     inventory create_inv(std::vector<std::pair<std::string, int>> items_list);
     void get_damage(int damage);
@@ -104,6 +110,8 @@ protected:
     
 public:
     Player();
+
+    level level;
     void print_invetory();
     void fatigue();
     void otladka_goloda();
@@ -135,7 +143,7 @@ public:
     Enemy();
     Enemy(std::string race1, int hp, int experience_, int power, int arm, std::string type_drop, std::vector<std::string> drop_id_f={"1"}, std::vector<int> f_count={1}, std::vector<std::string> drop_id_w={"1"}, std::vector<int> w_count={1},
         std::vector<std::string> drop_id_a={"1"}, std::vector<int> a_count={1});
-    inventory E_is_alive(int g_damage);
+    inventory E_is_alive(int g_damage,Player& p);
     bool hp_positive();
     ~Enemy();
 };
