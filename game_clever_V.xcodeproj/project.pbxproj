@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		923B62DB256E9ACD00A3A45E /* units_collab.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 923B62DA256E9ACD00A3A45E /* units_collab.cpp */; };
 		92BE40382556C5A500837D44 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92BE40372556C5A500837D44 /* main.cpp */; };
 		92BE40402556C82300837D44 /* items.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92BE403E2556C82200837D44 /* items.cpp */; };
 		92BE40432556C83400837D44 /* units.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 92BE40412556C83400837D44 /* units.cpp */; };
@@ -26,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		923B62DA256E9ACD00A3A45E /* units_collab.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = units_collab.cpp; sourceTree = "<group>"; };
 		92BE40342556C5A500837D44 /* game_clever_V */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = game_clever_V; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BE40372556C5A500837D44 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		92BE403E2556C82200837D44 /* items.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = items.cpp; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				92BE40412556C83400837D44 /* units.cpp */,
 				92BE40422556C83400837D44 /* units.h */,
 				92DBEB852563C4980057BB94 /* items_functions.cpp */,
+				923B62DA256E9ACD00A3A45E /* units_collab.cpp */,
 			);
 			path = game_clever_V;
 			sourceTree = "<group>";
@@ -136,6 +139,7 @@
 				92BE40432556C83400837D44 /* units.cpp in Sources */,
 				92BE40402556C82300837D44 /* items.cpp in Sources */,
 				92DBEB862563C4980057BB94 /* items_functions.cpp in Sources */,
+				923B62DB256E9ACD00A3A45E /* units_collab.cpp in Sources */,
 				92BE40382556C5A500837D44 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

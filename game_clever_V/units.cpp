@@ -26,13 +26,15 @@ Enemy::Enemy()
 {
 }
 
-Enemy::Enemy(std::string race1, int hp, int experience_, int power, int arm, std::string type_drop, std::vector<std::string> drop_id_f, std::vector<int> f_count, std::vector<std::string> drop_id_w, std::vector<int> w_count, std::vector<std::string> drop_id_a, std::vector<int> a_count)
+Enemy::Enemy(std::string race1, int hp, int experience_, int power, std::string w_type, int arm, int deng , std::string type_drop, std::vector<std::string> drop_id_f, std::vector<int> f_count, std::vector<std::string> drop_id_w, std::vector<int> w_count, std::vector<std::string> drop_id_a, std::vector<int> a_count)
 {
+    money=deng;
     race = race1;
     MAX_HEALTH=hp;
     health = hp;
     experience=experience_;
     p_ar.first.strength=power;
+    p_ar.first.type_of_dam=w_type;
     p_ar.second.protection=arm;
     bool we=false;
     bool ar=false;
@@ -136,7 +138,7 @@ Player::Player()
     }
     race=mb_race;
     if (race=="дракон")
-        MAX_HEALTH=120; //поменять в хилинг!!!!
+        MAX_HEALTH=120; 
     else
         MAX_HEALTH=100;
     health=MAX_HEALTH;
@@ -277,7 +279,7 @@ bool Player::healing(int count)
 }
 
 
-void Player::have_a_dinner(std::string name) //добавить уход веса
+void Player::have_a_dinner(std::string name)
 {
     int temp = hunger;
     for (int i=0;i<f_bag.size();i++)

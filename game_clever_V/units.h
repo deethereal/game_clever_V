@@ -101,6 +101,7 @@ protected:
     int max_carrying;
     float p_mult=0;
     int hunger;
+    
     void add_item(Armory item);
     void add_food(Food snack);
     Armor p_armor;
@@ -110,7 +111,6 @@ protected:
     
 public:
     Player();
-
     level level;
     void print_invetory();
     void fatigue();
@@ -141,12 +141,13 @@ protected:
     inventory mob_drop();
 public:
     Enemy();
-    Enemy(std::string race1, int hp, int experience_, int power, int arm, std::string type_drop, std::vector<std::string> drop_id_f={"1"}, std::vector<int> f_count={1}, std::vector<std::string> drop_id_w={"1"}, std::vector<int> w_count={1},
+    Enemy(std::string race1, int hp, int experience_, int power, std::string w_type, int arm, int deng=0, std::string type_drop="", std::vector<std::string> drop_id_f={"1"}, std::vector<int> f_count={1}, std::vector<std::string> drop_id_w={"1"}, std::vector<int> w_count={1},
         std::vector<std::string> drop_id_a={"1"}, std::vector<int> a_count={1});
     inventory E_is_alive(int g_damage,Player& p);
+    void e_attack(Player& p, Enemy& e);
     bool hp_positive();
     ~Enemy();
 };
-
+void p_attack(Enemy& target, Player& p);
 
 #endif /* units_h */

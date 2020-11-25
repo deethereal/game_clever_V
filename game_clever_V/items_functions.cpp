@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include "units.h"
 #include <iostream>
-#include "units.h"
 #include "items.hpp"
 #include <map>
 
