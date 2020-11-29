@@ -16,11 +16,13 @@ struct level
 {
     int level;
     int level_bar;
+    bool is_new=false;
     void lvlup()
     {
         if (level_bar>=100)
         {
             level++;
+            is_new=true;
             level_bar-=100;
         }
     }
@@ -122,6 +124,7 @@ public:
     void print_info();
     bool is_alive();
     bool is_hungry();
+    void level_up();
     void drop_food(std::string name);
     void have_a_dinner(std::string name);
     void take_items(inventory from);

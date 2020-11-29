@@ -42,13 +42,13 @@ int main()
     }
     std::cout<<"День первый\n";
     //написать лор
-    std::cout<<"На пути вы встречаете маленькомго монстра, похожего на гнома, у него 60 здоровья, 15 атаки и 20 брони, хотите с ним драться? y/n\n";
+    std::cout<<"На пути вы встречаете маленькомго монстра, похожего на гнома, у него 60 здоровья, 15 атаки и 20 брони, он вас пока не заметил, хотите с ним драться? y/n\n";
     std::cin>>answer;
     if (answer=="y")
     {
         //std::vector<std::string> gnom_f={"хлеб"};
         //std::vector<int> gnom_f_count={10};
-        Enemy gnom("гуманоид", 60,99,15,"физ",20,15, "f", {"хлеб"}, {10});
+        Enemy gnom("гуманоид", 60,101,15,"физ",20,15, "f", {"хлеб"}, {10});
         std::cout<<"Кто будет атаковать первым -- решит жребий: ";
         char jreb='9';
         while (jreb!='1' and jreb!='0')
@@ -68,57 +68,41 @@ int main()
             gnom.e_attack(player, gnom);//починить
             fight_pve(player, gnom,0);
         }
-        
-        
-        
     }
-    
-    
-    
     if (e_killed[0])
     {
         cout<<"Ну и задал ты этому гному\n ";
         
     }
+    else
+        cout<<"Как только гном увидел вас, то сразу же дал деру, вы даже не успели ничего понять\n";
     
     
-    cout<<"END";
-    
-    
-    
-    
-    
-    
-    
-    while (command!="end" and player.is_alive())
-    {
-        std::cin>>command;
-        if (command=="healing")
+    cout<<"Вы падаете на привал, у вас есть время, чтобы отдхонуть и полечиться, введите end, чтобы закончить првивал и /help, чтобы увидеть доступные вам команды\n ";
+    while (command!="end")
         {
-            if(player.healing(player.pray(0)))
-                player.fatigue();
+            std::cin>>command;
+            if (command=="healing")
+            {
+                if(player.healing(player.pray(0)))
+                    player.fatigue();
+            }
+            else if (command =="поесть")
+            {
+                std::cout<<"что вы хотите съесть?"<<std::endl;
+                player.print_invetory();
+                std::string snack;
+                std::cin>>snack;
+                player.have_a_dinner(snack);
+            }
+            else if (command == "выкинуть")
+                player.drop_food("хлеб");
+            else if (command == "info")
+                player.print_info();
+            
         }
-        else if (command =="поесть")
-        {
-            std::cout<<"что вы хотите съесть?"<<std::endl;
-            player.print_invetory();
-            std::string snack;
-            std::cin>>snack;
-            player.have_a_dinner(snack);
-        }
-        else if (command == "выкинуть")
-            player.drop_food("хлеб");
-        else if (command == "info")
-            player.print_info();
-        else if (command=="хп")
-        {
-            player.get_damage(20);
-        }
-        else if (command=="голод")
-            player.otladka_goloda();
-        else
-            std::cout<<"Такой команды нет, введите другую"<<std::endl;
-    }
+    cout<<"Вы закончили привал и ложитесь спать, завтра вам предстоит долгий-долгий день....\n\n\n....\n\n\n";
+    cout<<"День второй";
     
     return 0;
 }

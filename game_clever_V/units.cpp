@@ -87,7 +87,13 @@ inventory Enemy::E_is_alive(int g_damage, Player& p, int i) //функция с�
         std::cout<<"цель мертва"<<std::endl;
         p.level.level_bar+=experience;
         p.level.lvlup();
+       
         p.level.progress(experience);
+        if (p.level.is_new)
+        {
+            p.level_up();
+            p.level.is_new=false;
+        }
         if (race=="гуманоид" or race=="зверь" or race=="БОСС" or race=="нeжить")
         {
             std::cout<<"Из моба выпало"<<std::endl;
@@ -227,7 +233,38 @@ void Unit::get_damage(int damage)
 {
     health-=damage;
 }
+void Player::level_up()
+{
+    std::cout<<"У вас новый уровень, что вы хотите увеличить здоровье/силу/ману -- hp/st/mana?\n";
+    std::string p_ans="";
+    int flag=0;
+    while (flag==0)
+    {
+        std::cin>>p_ans;
+        if (p_ans=="hp")
+        {
+            MAX_HEALTH+=5;
+            std::cout<<"Вы увеличили максимальное здоровье на 5!\n";
+            flag=1;
+        }
+        if (p_ans=="st")
+        {
+            physic_damage+=2;
+            std::cout<<"Вы увеличили урон на 2!\n";
+            flag=1;
+        }
+        if (p_ans=="mana")
+        {
+            MAX_MANA+=2;
+            std::cout<<"Вы увеличили максимальую ману на 2!\n";
+            flag=1;
+        }
+        if (flag==0)
+            std::cout<<"Введите характеристику\n";
+    }
+   
 
+}
 int Unit::damage(Unit& target, Unit& attacker)
 {
     int mhp=attacker.p_ar.first.strength;
