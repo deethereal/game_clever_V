@@ -13,7 +13,7 @@
 #include "items.hpp"
 #include <map>
 
-
+extern bool e_killed[1];
 std::map <std::string, Armor> armory = {{"c_base", Armor(2)}, {"m_base", Armor(1)}, {"w_base", Armor(0)}};
 std::map <std::string, Weapon> weapon = {{"c_base", Weapon(2)}, {"m_base", Weapon(1)}, {"w_base", Weapon(0)}};
 std::map <std::string, Food> food_list={{"хлеб", Food(0,0,0)} };
@@ -79,7 +79,7 @@ bool Enemy::hp_positive()
         return false;
 }
 
-inventory Enemy::E_is_alive(int g_damage, Player& p)
+inventory Enemy::E_is_alive(int g_damage, Player& p, int i) //функция смерти врага
 {
     inventory temp;
     if (health<=0)
@@ -93,6 +93,8 @@ inventory Enemy::E_is_alive(int g_damage, Player& p)
             std::cout<<"Из моба выпало"<<std::endl;
             temp=mob_drop();
         }
+        std::cout<<"Кстати, с него выпало немного денег: "<<return_money()<<" монет";
+        e_killed[i]=true;
 
     }
     else
@@ -208,7 +210,7 @@ bool Player::is_alive()
 {
     if (health>0)
         return true;
-    std::cout<<"Вы умерли"<<std::endl;
+    std::cout<<"\n\nВЫ УМЕРЛИ!"<<std::endl;
     return false;
 }
 bool Player::is_hungry()
@@ -249,9 +251,19 @@ int Unit::damage(Unit& target, Unit& attacker)
     
     return mhp;
 }
+int Unit::return_money()
+{
+    return money;
+}
+void Unit::money_increase(int value)
+{
+    money+=value;
+}
 
-
-
+void Unit::money_decrease(int value)
+{
+    money-=value;
+}
 void Player::fatigue()
 {
     hunger--;

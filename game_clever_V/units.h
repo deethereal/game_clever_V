@@ -87,6 +87,9 @@ protected:
   
 public:
     inventory create_inv(std::vector<std::pair<std::string, int>> items_list);
+    void money_increase(int value);
+    void money_decrease(int value);
+    int return_money();
     void get_damage(int damage);
     int damage(Unit& target, Unit& attacker);
     bool is_p=false;
@@ -144,11 +147,11 @@ public:
     Enemy();
     Enemy(std::string race1, int hp, int experience_, int power, std::string w_type, int arm, int deng=0, std::string type_drop="", std::vector<std::string> drop_id_f={"1"}, std::vector<int> f_count={1}, std::vector<std::string> drop_id_w={"1"}, std::vector<int> w_count={1},
         std::vector<std::string> drop_id_a={"1"}, std::vector<int> a_count={1});
-    inventory E_is_alive(int g_damage,Player& p);
+    inventory E_is_alive(int g_damage,Player& p, int i);
     void e_attack(Player& p, Enemy& e);
     bool hp_positive();
     ~Enemy();
 };
-void p_attack(Enemy& target, Player& p);
-
+void p_attack(Enemy& target, Player& p,int i);
+void fight_pve(Player& p, Enemy& u,int i);
 #endif /* units_h */

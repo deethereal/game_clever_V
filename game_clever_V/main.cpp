@@ -13,11 +13,12 @@
 #include <cstdlib>
 
 using namespace std;
-
+bool e_killed[1]={false};
 
 //дописать E_is_alive, сделать дроп вещей
 int main()
 {
+   
     srand(4224);
     std::cout<<"Добро пожаловать в игру M\\W\\C "<<std::endl;
     std::cout<<"Каждое действие стоит 1 еду (кроме еды)"<<std::endl<<"Когда у вас кончится еда, вы начнете получать по 10 урона в ход"<<std::endl;
@@ -56,50 +57,39 @@ int main()
             std::cin>>jreb;
             
         }
-        //if (rand()%2==(int(jreb)-'0'))
-        //{
-            while (gnom.hp_positive() and player.is_alive()) {
-                int a=rand()%101 +1;
-                int b=rand()%101 +1;
-                cout<<"Cколько будет "<<a<<"*"<<b<<"\n";
-                string m_a;
-                cin >>m_a;
-                if (stof(m_a)==a*b)
-                {
-                    cout<<"Верно\n";
-                    p_attack(gnom, player);
-                    
-                }
-                else if (m_a=="поесть")
-                {
-                    std::cout<<"что вы хотите съесть?"<<std::endl;
-                    player.print_invetory();
-                    std::string snack;
-                    std::cin>>snack;
-                    player.have_a_dinner(snack);
-                }
-                else if (m_a=="info")
-                    player.print_info();
-                else cout<<"Неверно\n";
-                player.fatigue();
-                if (gnom.hp_positive())
-                {
-                    cout<<"Теперь атакует противник\n";
-                    gnom.e_attack(player, gnom);//починить
-                }
-                    
-                
-                
-            }
-        //}
-        //else
-        //{
-            
-        //}
+        if (rand()%2==(int(jreb)-'0'))
+        {
+            cout<<"\nВы атакуете первым!\n\n";
+            fight_pve(player, gnom,0);
+        }
+        else
+        {
+            cout<<"\nВы атакуете вторым!\n\n";
+            gnom.e_attack(player, gnom);//починить
+            fight_pve(player, gnom,0);
+        }
+        
         
         
     }
+    
+    
+    
+    if (e_killed[0])
+    {
+        cout<<"Ну и задал ты этому гному\n ";
+        
+    }
+    
+    
     cout<<"END";
+    
+    
+    
+    
+    
+    
+    
     while (command!="end" and player.is_alive())
     {
         std::cin>>command;

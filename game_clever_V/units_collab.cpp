@@ -42,11 +42,11 @@ std::vector<std::pair<std::string, int>> string_split(std::string S) //разд�
 }
 
 
-void p_attack(Enemy& target, Player& p)
+void p_attack(Enemy& target, Player& p,int i)
 {
     if (target.hp_positive())
     {
-        inventory mob_drop = target.E_is_alive(p.damage(target, p),p);
+        inventory mob_drop = target.E_is_alive(p.damage(target, p),p,i);
         if (mob_drop.is_empty()!=0)
         {
             std::string input="";
@@ -109,6 +109,8 @@ void p_attack(Enemy& target, Player& p)
                 p.take_items(temp);
                 std::cout<<"\n";
                 delete_it(mob_drop, temp);
+                p.money_increase(target.return_money());
+                std::cout<<"\nТеперь у вас"<<p.return_money()<<" монет\n";
             }
             else
                 input="-1";
@@ -121,3 +123,59 @@ void Enemy::e_attack(Player& p, Enemy& e)
         p.get_damage(damage(p, e));
 
     }
+
+void fight_pve(Player& p, Enemy& u, int i)
+{
+    while (u.hp_positive() and p.is_alive()) {
+        int a=rand()%101 +1;
+        int b=rand()%101 +1;
+        std::cout<<"Cколько будет "<<a<<"*"<<b<<"\n";
+        std::string m_a;
+        std::cin >>m_a;
+        if (m_a=="info")
+        {
+            p.print_info();
+            
+        }
+        else if (m_a=="поесть")
+        {
+            std::cout<<"что вы хотите съесть?"<<std::endl;
+            p.print_invetory();
+            std::string snack;
+            std::cin>>snack;
+            p.have_a_dinner(snack);
+        }
+        else if (isdigit(m_a[0]))
+        {
+            if (stof(m_a)==a*b)
+            {
+                std::cout<<"Верно\n";
+                p_attack(u, p,i);
+            }
+
+            else std::cout<<"Неверно\n";
+            p.fatigue();
+        }
+        else
+        {
+            while (!isdigit(m_a[0]))
+            {
+                std::cout<<"Это не число, введите число\n";
+                std::cin>>m_a;
+            }
+            if (stof(m_a)==a*b)
+            {
+                std::cout<<"Верно\n";
+                p_attack(u, p, i);
+            }
+
+            else std::cout<<"Неверно\n";
+            p.fatigue();
+        }
+        if (u.hp_positive())
+        {
+            std::cout<<"Теперь атакует противник\n";
+            u.e_attack(p, u);//починить
+        }
+    }
+}
