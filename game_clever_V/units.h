@@ -89,6 +89,7 @@ public:
     inventory create_inv(std::vector<std::pair<std::string, int>> items_list);
     void get_damage(int damage);
     int damage(Unit& target, Unit& attacker);
+    bool is_p=false;
     std::string clas;
     Unit();
     

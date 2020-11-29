@@ -41,13 +41,13 @@ int main()
     }
     std::cout<<"День первый\n";
     //написать лор
-    std::cout<<"На пути вы встречаете маленькомго монстра, похожего на гнома, у него 60 здоровья, 10 атаки и 20 брони, хотите с ним драться? y/n\n";
+    std::cout<<"На пути вы встречаете маленькомго монстра, похожего на гнома, у него 60 здоровья, 15 атаки и 20 брони, хотите с ним драться? y/n\n";
     std::cin>>answer;
     if (answer=="y")
     {
         //std::vector<std::string> gnom_f={"хлеб"};
         //std::vector<int> gnom_f_count={10};
-        Enemy gnom("гуманоид", 60,99,10,"физ",20,15, "f", {"хлеб"}, {10});
+        Enemy gnom("гуманоид", 60,99,15,"физ",20,15, "f", {"хлеб"}, {10});
         std::cout<<"Кто будет атаковать первым -- решит жребий: ";
         char jreb='9';
         while (jreb!='1' and jreb!='0')
@@ -70,9 +70,23 @@ int main()
                     p_attack(gnom, player);
                     
                 }
+                else if (m_a=="поесть")
+                {
+                    std::cout<<"что вы хотите съесть?"<<std::endl;
+                    player.print_invetory();
+                    std::string snack;
+                    std::cin>>snack;
+                    player.have_a_dinner(snack);
+                }
+                else if (m_a=="info")
+                    player.print_info();
                 else cout<<"Неверно\n";
                 player.fatigue();
-                gnom.e_attack(player, gnom);//починить
+                if (gnom.hp_positive())
+                {
+                    cout<<"Теперь атакует противник\n";
+                    gnom.e_attack(player, gnom);//починить
+                }
                     
                 
                 

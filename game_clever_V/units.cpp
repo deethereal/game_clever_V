@@ -93,7 +93,6 @@ inventory Enemy::E_is_alive(int g_damage, Player& p)
             std::cout<<"Из моба выпало"<<std::endl;
             temp=mob_drop();
         }
-        this->~Enemy();
 
     }
     else
@@ -191,6 +190,7 @@ Player::Player()
     if (race=="каджит")
         add_food(food_list.find("хлеб")->second);
     add_food(food_list.find("хлеб")->second);
+    is_p=true;
 }
 int Player::pray(int target)
 {
@@ -232,9 +232,12 @@ int Unit::damage(Unit& target, Unit& attacker)
     if (attacker.p_ar.first.type_of_dam == "физ")
     {
         mhp+=attacker.physic_damage;
-        mhp=mhp-(target.p_ar.second.protection)/2;
+        mhp=mhp-(int)(target.p_ar.second.protection)/5;
         target.get_damage(mhp);
-        std::cout<<"Цель получила "<<mhp<<" урона"<<std::endl;
+        if (!target.is_p)
+            std::cout<<"Цель получила "<<mhp<<" урона"<<std::endl;
+        else
+            std::cout<<"Вы поулчили "<<mhp<<" урона"<<std::endl;
     }
     else
     {
@@ -323,8 +326,8 @@ void Player::print_info()
     std::cout<<"Из еды у вас есть: "; print_invetory(); std::cout<<std::endl;
 }
 Player::~Player(){}
-Enemy::~Enemy(){}
-Unit::~Unit()
-{
+Enemy::~Enemy(){std::cout<<"\nDEATH\n";}
 
-}
+Unit::~Unit()
+{}
+
