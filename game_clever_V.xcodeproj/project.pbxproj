@@ -28,6 +28,7 @@
 
 /* Begin PBXFileReference section */
 		923B62DA256E9ACD00A3A45E /* units_collab.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = units_collab.cpp; sourceTree = "<group>"; };
+		92507B2225763E4900CD5EC9 /* lor.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = lor.txt; sourceTree = "<group>"; };
 		92BE40342556C5A500837D44 /* game_clever_V */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = game_clever_V; sourceTree = BUILT_PRODUCTS_DIR; };
 		92BE40372556C5A500837D44 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		92BE403E2556C82200837D44 /* items.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = items.cpp; sourceTree = "<group>"; };
@@ -74,6 +75,7 @@
 				92BE40422556C83400837D44 /* units.h */,
 				92DBEB852563C4980057BB94 /* items_functions.cpp */,
 				923B62DA256E9ACD00A3A45E /* units_collab.cpp */,
+				92507B2225763E4900CD5EC9 /* lor.txt */,
 			);
 			path = game_clever_V;
 			sourceTree = "<group>";
