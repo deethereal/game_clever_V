@@ -136,7 +136,12 @@ public:
 };
 class fNPC: public Unit
 {
-    
+protected:
+    inventory npc_inv;
+public:
+    fNPC(inventory inv, int value);
+    void trade(Player& p);
+    ~fNPC();
     
 };
 class Enemy: public Unit

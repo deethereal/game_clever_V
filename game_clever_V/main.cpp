@@ -11,7 +11,15 @@
 #include <typeinfo>
 #include <vector>
 #include <cstdlib>
-
+#include <fstream>
+std::string PATH = "/Users/denis/Documents/stage_two/game_clever_V/game_clever_V/lor.txt";
+std::ifstream lf(PATH);
+void print_s()
+{
+    std::string s;
+    std::getline(lf,s);
+    std::cout<<s<<"\n";
+}
 using namespace std;
 bool e_killed[1]={false};
 
@@ -20,32 +28,38 @@ int main()
 {
    //new commits(1)
     //лялялля
+    
     srand(4224);
-    std::cout<<"Добро пожаловать в игру M\\W\\C "<<std::endl;
-    std::cout<<"Каждое действие стоит 1 еду (кроме еды)"<<std::endl<<"Когда у вас кончится еда, вы начнете получать по 10 урона в ход"<<std::endl;
+    //вступление
+    print_s();
+    print_s();
+    print_s();
     Player player;
     player.print_info();
     std::string command="";
     std::cout<<std::endl;
-    std::cout<<"В любой момент вы можете ввести \"info\", чтобы узнать информацию о вашем персонаже\n";
-    
-    std::cout<<"Вы просыпаетесь без памяти, единтсвенное, что вы помните, что вам надо найти \"Амулет Счастья\" и имя \"Тенурион\". \n Вы находите местного жителя, и он рассказывает вам легенду о Тенурионе, который носит тот самый Амулет, указывает направление.\nВы готовы отправиться в путь? y/n \n";
+    //класс
+    print_s();
+    //начало лора
+    print_s();
+    print_s();
+    print_s();
     std::string answer="info";
     while (answer=="info")
     {
     std::cin>>answer;
-    if (answer=="y")
+    if (answer=="д")
         std::cout<<"Я всегда знал, что ты смелый\n";
     else if (answer=="info")
         player.print_info();
     else
         std::cout<<"Это был риторический вопрос\n";
     }
-    std::cout<<"День первый\n";
-    //написать лор
-    std::cout<<"На пути вы встречаете маленькомго монстра, похожего на гнома, у него 60 здоровья, 15 атаки и 20 брони, он вас пока не заметил, хотите с ним драться? y/n\n";
+    std::cout<<"\nДень первый\n";
+    
+    print_s(); //предложение про гнома
     std::cin>>answer;
-    if (answer=="y")
+    if (answer=="д")
     {
         //std::vector<std::string> gnom_f={"хлеб"};
         //std::vector<int> gnom_f_count={10};
@@ -79,8 +93,8 @@ int main()
         cout<<"Как только гном увидел вас, то сразу же дал деру, вы даже не успели ничего понять\n";
     
     
-    cout<<"Вы падаете на привал, у вас есть время, чтобы отдхонуть и полечиться, введите end, чтобы закончить првивал и /help, чтобы увидеть доступные вам команды\n ";
-    while (command!="end")
+    print_s();//привал
+    while (command!="стоп")
         {
             std::cin>>command;
             if (command=="healing")
@@ -100,10 +114,12 @@ int main()
                 player.drop_food("хлеб");
             else if (command == "info")
                 player.print_info();
+            else if (command =="/help")
+                std::cout<<"help";//написать функцию, которая выводить доступные команды
             
         }
     cout<<"Вы закончили привал и ложитесь спать, завтра вам предстоит долгий-долгий день....\n\n\n....\n\n\n";
-    cout<<"День второй";
-    
+    cout<<"День второй\n\n";
+    //РЕАЛИЗОВАТЬ КЛАСС fNPC и функцию trade
     return 0;
 }

@@ -67,46 +67,6 @@ Enemy::Enemy(std::string race1, int hp, int experience_, int power, std::string 
                 e_inv.f_part.back().count=f_count[i];
             }
 }
-void Player::otladka_goloda()
-{
-    hunger-=20;
-}
-bool Enemy::hp_positive()
-{
-    if (health>0)
-        return true;
-    else
-        return false;
-}
-
-inventory Enemy::E_is_alive(int g_damage, Player& p, int i) //функция смерти врага
-{
-    inventory temp;
-    if (health<=0)
-    {
-        std::cout<<"цель мертва"<<std::endl;
-        p.level.level_bar+=experience;
-        p.level.lvlup();
-       
-        p.level.progress(experience);
-        if (p.level.is_new)
-        {
-            p.level_up();
-            p.level.is_new=false;
-        }
-        if (race=="гуманоид" or race=="зверь" or race=="БОСС" or race=="нeжить")
-        {
-            std::cout<<"Из моба выпало"<<std::endl;
-            temp=mob_drop();
-        }
-        std::cout<<"Кстати, с него выпало немного денег: "<<return_money()<<" монет";
-        e_killed[i]=true;
-
-    }
-    else
-        std::cout<<"осталоcь "<<MAX_HEALTH-g_damage<<" здоровья"<<std::endl;
-    return temp;
-}
 
 Player::Player()
 {
@@ -194,12 +154,58 @@ Player::Player()
         p_ar.first=weapon.find("c_base")->second;
         p_ar.second=armory.find("c_base")->second;
     }
-    std::cout<<typeid(a_bag[0]).name()<<std::endl;
     if (race=="каджит")
         add_food(food_list.find("хлеб")->second);
     add_food(food_list.find("хлеб")->second);
     is_p=true;
 }
+fNPC::fNPC(inventory inv, int value)
+{
+    money=value;
+    npc_inv=inv;
+}
+
+void Player::otladka_goloda()
+{
+    hunger-=20;
+}
+bool Enemy::hp_positive()
+{
+    if (health>0)
+        return true;
+    else
+        return false;
+}
+
+inventory Enemy::E_is_alive(int g_damage, Player& p, int i) //функция смерти врага
+{
+    inventory temp;
+    if (health<=0)
+    {
+        std::cout<<"цель мертва"<<std::endl;
+        p.level.level_bar+=experience;
+        p.level.lvlup();
+       
+        p.level.progress(experience);
+        if (p.level.is_new)
+        {
+            p.level_up();
+            p.level.is_new=false;
+        }
+        if (race=="гуманоид" or race=="зверь" or race=="БОСС" or race=="нeжить")
+        {
+            std::cout<<"Из моба выпало"<<std::endl;
+            temp=mob_drop();
+        }
+        std::cout<<"Кстати, с него выпало немного денег: "<<return_money()<<" монет";
+        e_killed[i]=true;
+
+    }
+    else
+        std::cout<<"осталоcь "<<MAX_HEALTH-g_damage<<" здоровья"<<std::endl;
+    return temp;
+}
+
 int Player::pray(int target)
 {
     int damage=20;
@@ -265,6 +271,7 @@ void Player::level_up()
    
 
 }
+
 int Unit::damage(Unit& target, Unit& attacker)
 {
     int mhp=attacker.p_ar.first.strength;
@@ -375,8 +382,7 @@ void Player::print_info()
     std::cout<<"Из еды у вас есть: "; print_invetory(); std::cout<<std::endl;
 }
 Player::~Player(){}
-Enemy::~Enemy(){std::cout<<"\nDEATH\n";}
-
-Unit::~Unit()
-{}
+Enemy::~Enemy(){}
+fNPC::~fNPC(){}
+Unit::~Unit(){}
 
