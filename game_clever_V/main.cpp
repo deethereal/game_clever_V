@@ -18,7 +18,7 @@ bool e_killed[1]={false};
 //дописать E_is_alive, сделать дроп вещей
 int main()
 {
-   //new commits
+   //new commits(1)
     srand(4224);
     std::cout<<"Добро пожаловать в игру M\\W\\C "<<std::endl;
     std::cout<<"Каждое действие стоит 1 еду (кроме еды)"<<std::endl<<"Когда у вас кончится еда, вы начнете получать по 10 урона в ход"<<std::endl;
