@@ -11,6 +11,11 @@
 #include <iostream>
 #include "items.hpp"
 #include <vector>
+#include <map>
+
+extern std::map <std::string, Food> food_list;
+extern std::map <std::string, Armor> armory;
+extern std::map <std::string, Weapon> weapon;
 
 std::vector<std::pair<std::string, int>> string_split(std::string S) //разделял по ","
 {
@@ -49,7 +54,7 @@ void p_attack(Enemy& target, Player& p,int i)
         inventory mob_drop = target.E_is_alive(p.damage(target, p),p,i);
         if (mob_drop.is_empty()!=0)
         {
-            std::string input="";
+            std::string input="info";
             while (input!="-1")
             {
             std::cout<<"цель мертва"<<std::endl;
@@ -175,7 +180,126 @@ void fight_pve(Player& p, Enemy& u, int i)
         if (u.hp_positive())
         {
             std::cout<<"Теперь атакует противник\n";
-            u.e_attack(p, u);//починить
+            u.e_attack(p, u);
         }
     }
+}
+void fNPC::sell(Player& p)
+{
+    
+    std::vector<std::pair<std::string, int>> inv;
+    bool cheat=true;
+    std::string input="info";
+    
+    while (cheat and input!="end")
+    {
+        input="info";
+        std::cout<<"На продажу есть:\n";
+        npc_inv.show_for_selling();
+        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info";
+        while (input=="info")
+        {
+            p.print_info();
+            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info"<<std::endl;
+            std::cin>>input;
+        }
+        std::vector<std::pair<std::string, int>> inv = string_split(input);
+        cheat=false;
+        //проверка на то, что вещей достаточно
+        int j=0;
+        while (j< inv.size() and not cheat)
+        {
+            int i=0;
+            while (i<npc_inv.f_part.size() and (not cheat))
+            {
+                if ((npc_inv.f_part[i].name==inv[j].first) and (npc_inv.f_part[i].count<inv[j].second))
+                {
+                    std::cout<<"У меня нет столько вещей!\n";
+                    cheat=true;
+                }
+                i++;
+            }
+            i=0;
+            while (i<npc_inv.a_part.size() and (not cheat))
+            {
+                if ((npc_inv.a_part[i].name==inv[j].first) and (npc_inv.a_part[i].count<inv[j].second))
+                {
+                    std::cout<<"У меня нет столько вещей!\n";
+                    cheat=true;
+                }
+                i++;
+            }
+            i=0;
+            while (i<npc_inv.w_part.size() and (not cheat))
+            {
+                if ((npc_inv.w_part[i].name==inv[j].first) and (npc_inv.w_part[i].count<inv[j].second))
+                {
+                    std::cout<<"У меня нет столько вещей!\n";
+                    cheat=true;
+                }
+                i++;
+            }
+
+            j++;
+        }
+        
+    
+    if (not cheat)
+    {
+        inventory temp=p.create_inv(inv);
+        int sum=0;
+        int i=0;
+        while (i<temp.f_part.size()) {
+            int cost_i=0;
+            for (int j=0;j<npc_inv.f_part.size();j++)
+            {
+                if (temp.f_part[i].name==npc_inv.f_part[j].name)
+                    cost_i=npc_inv.f_part[j].cost;
+            }
+            sum+=(temp.f_part[i].count*cost_i);
+            i++;
+        }
+        std::cout<<"\n";
+        i=0;
+        while (i<temp.w_part.size()) {
+            int cost_i=0;
+            for (int j=0;j<npc_inv.w_part.size();j++)
+            {
+                if (temp.w_part[i].name==npc_inv.w_part[j].name)
+                    cost_i=npc_inv.w_part[j].cost;
+            }
+            sum+=(temp.w_part[i].count*cost_i);
+            i++;
+        }
+        std::cout<<"\n";
+        i=0;
+        while (i<temp.a_part.size()) {
+            int cost_i=0;
+            for (int j=0;j<npc_inv.a_part.size();j++)
+            {
+                if (temp.a_part[i].name==npc_inv.a_part[j].name)
+                    cost_i=npc_inv.a_part[j].cost;
+            }
+            sum+=(temp.a_part[i].count*cost_i);
+            i++;
+        }
+        if (p.return_money()>=sum)
+        {
+            p.money_decrease(sum);
+            money_increase(sum);
+            p.take_items(temp);
+            std::cout<<"\n";
+            delete_it(npc_inv, temp);
+        }
+        else{
+            
+            std::cout<<"Вам не хватает денег\n";
+        }
+        cheat=true;
+    }
+        
+    }
+    
+    
+
 }

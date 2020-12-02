@@ -159,10 +159,43 @@ Player::Player()
     add_food(food_list.find("хлеб")->second);
     is_p=true;
 }
-fNPC::fNPC(inventory inv, int value)
+fNPC::fNPC(int value, std::string type_drop, std::vector<std::string> drop_id_f, std::vector<int> f_count, std::vector<int> f_cost, std::vector<std::string> drop_id_w, std::vector<int> w_count, std::vector<int> w_cost,
+           std::vector<std::string> drop_id_a, std::vector<int> a_count, std::vector<int> a_cost)
 {
     money=value;
-    npc_inv=inv;
+    bool we=false;
+    bool ar=false;
+    bool fo=false;
+    for (int i=0;i<type_drop.length();i++)
+    {
+        if (type_drop[i]=='w')
+            we=true;
+        if (type_drop[i]=='a')
+            ar=true;
+        if (type_drop[i]=='f')
+            fo=true;
+            }
+        if (we)
+            for (int i=0;i<drop_id_w.size();i++)
+            {
+                npc_inv.w_part.push_back(weapon.find(drop_id_w[i])->second);
+                npc_inv.w_part.back().count=w_count[i];
+                npc_inv.w_part.back().Item::cost=w_cost[i];
+            }
+        if (ar)
+            for (int i=0;i<drop_id_a.size();i++)
+            {
+                npc_inv.a_part.push_back(armory.find(drop_id_a[i])->second);
+                npc_inv.a_part.back().count=a_count[i];
+                npc_inv.a_part.back().Item::cost=a_cost[i];
+            }
+        if (fo)
+             for (int i=0;i<drop_id_f.size();i++)
+            {
+                npc_inv.f_part.push_back(food_list.find(drop_id_f[i])->second);
+                npc_inv.f_part.back().count=f_count[i];
+                npc_inv.f_part.back().Item::cost=f_cost[i];
+            }
 }
 
 void Player::otladka_goloda()
@@ -379,6 +412,7 @@ void Player::print_info()
     std::cout<<"Голод: "<<hunger<<std::endl;
     std::cout<<"Оружие: "<<p_ar.first.name<<std::endl;
     std::cout<<"Вес:  "<<carrying<<"/ "<<max_carrying<<std::endl;
+    std::cout<<"Деньги: "<<money<<" монет\n";
     std::cout<<"Из еды у вас есть: "; print_invetory(); std::cout<<std::endl;
 }
 Player::~Player(){}

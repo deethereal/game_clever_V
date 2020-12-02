@@ -62,6 +62,29 @@ struct inventory
         }
         std::cout<<"\n";
     }
+    void show_for_selling()
+    {
+        int i=0;
+        std::cout<<"Из еды у него было: "<<std::endl;
+        while (i<f_part.size()) {
+            std::cout<<f_part[i].count<<" "<<f_part[i].name<<" за "<<f_part[i].cost<<" монет каждый\n";
+            i++;
+        }
+        i=0;
+        std::cout<<"Из оружия у него было: "<<std::endl;
+        while (i<w_part.size()) {
+            std::cout<<w_part[i].count<<" "<<w_part[i].name<<" за "<<w_part[i].cost<<" монет каждый\n";
+            i++;
+        }
+        std::cout<<"\n";
+        i=0;
+        std::cout<<"Из снаряжения у него было: "<<std::endl;
+        while (i<a_part.size()) {
+            std::cout<<a_part[i].count<<" "<<a_part[i].name<<" за "<<a_part[i].cost<<" монет каждый\n";
+            i++;
+        }
+        std::cout<<"\n";
+    }
     unsigned long is_empty()
     {
         return f_part.size()+a_part.size()+w_part.size();
@@ -139,8 +162,10 @@ class fNPC: public Unit
 protected:
     inventory npc_inv;
 public:
-    fNPC(inventory inv, int value);
-    void trade(Player& p);
+    fNPC();
+    fNPC(int value, std::string type_drop="", std::vector<std::string> drop_id_f={"1"}, std::vector<int> f_count={1}, std::vector<int> f_cost={1}, std::vector<std::string> drop_id_w={"1"}, std::vector<int> w_count={1}, std::vector<int> w_cost={1},
+         std::vector<std::string> drop_id_a={"1"}, std::vector<int> a_count={1}, std::vector<int> a_cost={1});
+    void sell(Player& p);
     ~fNPC();
     
 };

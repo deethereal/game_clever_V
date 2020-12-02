@@ -12,15 +12,20 @@
 #include <vector>
 #include <cstdlib>
 #include <fstream>
+using namespace std;
+
 std::string PATH = "/Users/denis/Documents/stage_two/game_clever_V/game_clever_V/lor.txt";
 std::ifstream lf(PATH);
+void help()
+{
+    cout<<"Вы можете:\nполечиться\nnоесть\ninfo\nвыкинуть";
+}
 void print_s()
 {
-    std::string s;
-    std::getline(lf,s);
-    std::cout<<s<<"\n";
+    string s;
+    getline(lf,s);
+    cout<<s<<"\n";
 }
-using namespace std;
 bool e_killed[1]={false};
 
 //дописать E_is_alive, сделать дроп вещей
@@ -63,7 +68,7 @@ int main()
     {
         //std::vector<std::string> gnom_f={"хлеб"};
         //std::vector<int> gnom_f_count={10};
-        Enemy gnom("гуманоид", 60,101,15,"физ",20,15, "f", {"хлеб"}, {10});
+        Enemy gnom("гуманоид", 60,99,15,"физ",20,15, "f", {"хлеб"}, {10});
         std::cout<<"Кто будет атаковать первым -- решит жребий: ";
         char jreb='9';
         while (jreb!='1' and jreb!='0')
@@ -97,7 +102,7 @@ int main()
     while (command!="стоп")
         {
             std::cin>>command;
-            if (command=="healing")
+            if (command=="полечиться")
             {
                 if(player.healing(player.pray(0)))
                     player.fatigue();
@@ -114,12 +119,20 @@ int main()
                 player.drop_food("хлеб");
             else if (command == "info")
                 player.print_info();
-            else if (command =="/help")
-                std::cout<<"help";//написать функцию, которая выводить доступные команды
+            else if (command =="/помощь")
+                help();
             
         }
     cout<<"Вы закончили привал и ложитесь спать, завтра вам предстоит долгий-долгий день....\n\n\n....\n\n\n";
     cout<<"День второй\n\n";
+    print_s();//зашли в город
+    std::cin>>answer;
+    if (answer=="д")
+    {
+        fNPC torgash(100,{"f"},{"хлеб"},{100},{1});
+        torgash.sell(player);
+        player.print_info();
+    }
     //РЕАЛИЗОВАТЬ КЛАСС fNPC и функцию trade
     return 0;
 }
