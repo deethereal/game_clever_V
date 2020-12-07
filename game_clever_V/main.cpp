@@ -4,7 +4,7 @@
 //
 //  Created by denis  on 15.10.2020.
 //  Copyright © 2020 denis . All rights reserved.
-//1
+//
 
 #include <iostream>
 #include "units.h"
@@ -28,12 +28,9 @@ void print_s()
 }
 bool e_killed[1]={false};
 
-//дописать E_is_alive, сделать дроп вещей
 int main()
 {
    //new commits(1)
-    //лялялля
-    
     srand(4224);
     //вступление
     print_s();
@@ -66,8 +63,6 @@ int main()
     std::cin>>answer;
     if (answer=="д")
     {
-        //std::vector<std::string> gnom_f={"хлеб"};
-        //std::vector<int> gnom_f_count={10};
         Enemy gnom("гуманоид", 60,99,15,"физ",20,15, "f", {"хлеб"}, {10});
         std::cout<<"Кто будет атаковать первым -- решит жребий: ";
         char jreb='9';
@@ -129,9 +124,12 @@ int main()
     std::cin>>answer;
     if (answer=="д")
     {
+        while (answer=="д")
+        {
         fNPC torgash(100,{"f"},{"хлеб"},{100},{1});
         torgash.sell(player);
-        player.print_info();
+        
+        }
     }
     //РЕАЛИЗОВАТЬ КЛАСС fNPC и функцию trade
     return 0;

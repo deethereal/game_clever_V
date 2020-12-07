@@ -191,22 +191,26 @@ void fNPC::sell(Player& p)
     bool cheat=true;
     std::string input="info";
     
-    while (cheat and input!="end")
+    while (cheat and input!="стоп")
     {
         input="info";
         std::cout<<"На продажу есть:\n";
         npc_inv.show_for_selling();
-        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info";
+        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info\n или стоп\n";
+        std::cin>>input;
         while (input=="info")
         {
             p.print_info();
-            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info"<<std::endl;
+            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info или стоп\n"<<std::endl;
             std::cin>>input;
         }
+        
         std::vector<std::pair<std::string, int>> inv = string_split(input);
         cheat=false;
         //проверка на то, что вещей достаточно
         int j=0;
+        if (input!="стоп")
+        {
         while (j< inv.size() and not cheat)
         {
             int i=0;
@@ -259,7 +263,6 @@ void fNPC::sell(Player& p)
             sum+=(temp.f_part[i].count*cost_i);
             i++;
         }
-        std::cout<<"\n";
         i=0;
         while (i<temp.w_part.size()) {
             int cost_i=0;
@@ -271,7 +274,6 @@ void fNPC::sell(Player& p)
             sum+=(temp.w_part[i].count*cost_i);
             i++;
         }
-        std::cout<<"\n";
         i=0;
         while (i<temp.a_part.size()) {
             int cost_i=0;
@@ -296,6 +298,7 @@ void fNPC::sell(Player& p)
             std::cout<<"Вам не хватает денег\n";
         }
         cheat=true;
+    }
     }
         
     }

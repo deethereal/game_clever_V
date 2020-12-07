@@ -65,20 +65,20 @@ struct inventory
     void show_for_selling()
     {
         int i=0;
-        std::cout<<"Из еды у него было: "<<std::endl;
+        std::cout<<"Из еды : "<<std::endl;
         while (i<f_part.size()) {
             std::cout<<f_part[i].count<<" "<<f_part[i].name<<" за "<<f_part[i].cost<<" монет каждый\n";
             i++;
         }
         i=0;
-        std::cout<<"Из оружия у него было: "<<std::endl;
+        std::cout<<"Из оружия : "<<std::endl;
         while (i<w_part.size()) {
             std::cout<<w_part[i].count<<" "<<w_part[i].name<<" за "<<w_part[i].cost<<" монет каждый\n";
             i++;
         }
         std::cout<<"\n";
         i=0;
-        std::cout<<"Из снаряжения у него было: "<<std::endl;
+        std::cout<<"Из снаряжения: "<<std::endl;
         while (i<a_part.size()) {
             std::cout<<a_part[i].count<<" "<<a_part[i].name<<" за "<<a_part[i].cost<<" монет каждый\n";
             i++;
