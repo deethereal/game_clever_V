@@ -6,6 +6,19 @@
 //  Copyright © 2020 denis . All rights reserved.
 //2
 #include "items.hpp"
+
+
+std::string type[3]={"физ","маг","маг"};
+std::string w_name[3]={"ржавый меч", "палка-заклиналка", "ветхая книга"};
+int w_strength [3] = {50,10,1};
+std::string a_name[3]={"комлпект железных доспехов", "роба школы магии", "церковная роба" };
+int w_weight[3]={15,5,1};
+int a_protection [3] = {50,15,15};
+int a_weight[3]={12,9,3};
+std::string f_name[1]={"хлеб"};
+int f_weight[1]={2};
+int f_satiety[1]={5};
+
 Item::Item() {}
 Item::Item(int i) {
     cost = i_cost[i];

@@ -39,12 +39,10 @@ public:
 class Weapon :public Armory
 {
 protected:
-    std::string w_name[3]={"ржавый меч", "палка-заклиналка", "ветхая книга"};
-    int w_strength [3] = {50,10,1};
    
-    int w_weight[3]={15,5,1};
     
-    std::string type[3]={"физ","маг","маг"};
+    
+    
 public:
     std::string type_of_dam;
     int strength;
@@ -56,9 +54,7 @@ public:
 class Armor: public Armory
 {
 protected:
-    std::string a_name[3]={"комлпект железных доспехов", "роба школы магии", "церковная роба" };
-    int a_protection [3] = {50,15,15};
-    int a_weight[3]={12,9,3};
+    
     
     
 public:
@@ -70,9 +66,7 @@ public:
 class Food:public Item
 {
 protected:
-     std::string f_name[1]={"хлеб"};
-     int f_weight[1]={2};
-     int f_satiety[1]={5};
+
 public:
     int count;
     Food();

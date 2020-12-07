@@ -137,12 +137,14 @@ protected:
     Weapon p_weapon;
     std::vector<Armory> a_bag;
     std::vector <Food> f_bag;
+
     
 public:
     Player();
     level level;
     void print_invetory();
     void fatigue();
+    void show_inv();
     void otladka_goloda();
     void print_info();
     bool is_alive();
@@ -187,4 +189,5 @@ public:
 };
 void p_attack(Enemy& target, Player& p,int i);
 void fight_pve(Player& p, Enemy& u,int i);
+void sell_to_npc(std::string items, fNPC& seller, Player& p);
 #endif /* units_h */

@@ -55,16 +55,16 @@ void p_attack(Enemy& target, Player& p,int i)
         if (mob_drop.is_empty()!=0)
         {
             std::string input="info";
-            while (input!="-1")
+            while (input!="стоп")
             {
             std::cout<<"цель мертва"<<std::endl;
             mob_drop.show();
-            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или info"<<std::endl;
+            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или info, или стоп"<<std::endl;
             std::cin>>input;
             while (input=="info")
             {
                 p.print_info();
-                std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или info"<<std::endl;
+                std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или info, или стоп"<<std::endl;
                 std::cin>>input;
             }
 
@@ -193,15 +193,16 @@ void fNPC::sell(Player& p)
     
     while (cheat and input!="стоп")
     {
-        input="info";
+        input="";
+        p.print_info();
         std::cout<<"На продажу есть:\n";
         npc_inv.show_for_selling();
-        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info\n или стоп\n";
+        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info, или стоп\n";
         std::cin>>input;
         while (input=="info")
         {
             p.print_info();
-            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info или стоп\n"<<std::endl;
+            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info, или стоп\n"<<std::endl;
             std::cin>>input;
         }
         
@@ -300,9 +301,27 @@ void fNPC::sell(Player& p)
         cheat=true;
     }
     }
-        
+    }
+}
+void sell_to_npc(std::string items, fNPC& seller, Player& p)
+{
+    std::cout<<"У торговца есть "<<seller.return_money()<<"  монет\n";
+    std::vector<std::pair<std::string, int>> inv;
+    bool cheat=true;
+    std::string input="info";
+    
+    while (cheat and input!="стоп")
+    {
+        input="info";
+        std::cout<<"Введите, что вы хотите продать или info, или стоп\n";
+        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info\n или стоп\n";
+        std::cin>>input;
+        while (input=="info")
+        {
+            p.print_info();
+            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info или стоп\n"<<std::endl;
+            std::cin>>input;
+        }
     }
     
-    
-
 }

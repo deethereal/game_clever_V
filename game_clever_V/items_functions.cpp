@@ -110,7 +110,7 @@ void Player::take_items(inventory from)
         for (int j=0;j<from.w_part[i].count;j++)
             add_item(from.w_part[i]);
     }
-    print_invetory();
+    //print_invetory();
 }
 void Player::add_food(Food snack)
 {

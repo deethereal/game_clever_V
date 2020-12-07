@@ -15,7 +15,7 @@
 
 extern bool e_killed[1];
 std::map <std::string, Armor> armory = {{"c_base", Armor(2)}, {"m_base", Armor(1)}, {"w_base", Armor(0)}};
-std::map <std::string, Weapon> weapon = {{"c_base", Weapon(2)}, {"m_base", Weapon(1)}, {"w_base", Weapon(0)}};
+std::map <std::string, Weapon> weapon = {{"ветхая книга", Weapon(2)}, {"m_base", Weapon(1)}, {"w_base", Weapon(0)}};
 std::map <std::string, Food> food_list={{"хлеб", Food(0,0,0)} };
 
 
@@ -405,15 +405,17 @@ void Player::print_info()
     std::cout<<"Гендep: "<<gender<<std::endl;
     std::cout<<"Раса: "<<race<<std::endl;
     std::cout<<"Здоровье: "<<health<<std::endl;
-    std::cout<<"Оружие: "<<p_ar.second.name<<std::endl;
+    std::cout<<"Cнаряжение: "<<p_ar.second.name<<std::endl;
     std::cout<<"Уровень: "<<level.level<<std::endl;
     std::cout<<"Прогресс уровня: "<<level.level_bar<<"/100"<<std::endl;
-    std::cout<<"Деньги: "<<money<<std::endl;
     std::cout<<"Голод: "<<hunger<<std::endl;
     std::cout<<"Оружие: "<<p_ar.first.name<<std::endl;
     std::cout<<"Вес:  "<<carrying<<"/ "<<max_carrying<<std::endl;
-    std::cout<<"Деньги: "<<money<<" монет\n";
     std::cout<<"Из еды у вас есть: "; print_invetory(); std::cout<<std::endl;
+}
+void show_inv()
+{
+    
 }
 Player::~Player(){}
 Enemy::~Enemy(){}

@@ -126,7 +126,7 @@ int main()
     {
         while (answer=="д")
         {
-        fNPC torgash(100,{"f"},{"хлеб"},{100},{1});
+        fNPC torgash(100,{"fw"},{"хлеб","ветхая книга"},{100,1},{1,1});
         torgash.sell(player);
         
         }
