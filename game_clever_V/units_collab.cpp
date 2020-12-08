@@ -9,18 +9,18 @@
 #include <stdio.h>
 #include "units.h"
 #include <iostream>
-#include "items.hpp"
-#include <vector>
 #include <map>
 
 extern std::map <std::string, Food> food_list;
 extern std::map <std::string, Armor> armory;
 extern std::map <std::string, Weapon> weapon;
 
-std::vector<std::pair<std::string, int>> string_split(std::string S) //разделял по ","
+std::vector<std::pair<std::string, int>> string_split(const std::string& S) //разделял по ","
 {
     std::vector<std::pair<std::string, int>> result;
     std::string word="";
+    //std::cout<<S<<"\n";
+    //std::cout<<S[1]<<std::endl;
     int count_i=0;
     int i=0;
     while (i<S.size())
@@ -63,7 +63,7 @@ void p_attack(Enemy& target, Player& p,int i)
             std::cin>>input;
             while (input=="info")
             {
-                p.print_info();
+                p.show_inv();
                 std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или info, или стоп"<<std::endl;
                 std::cin>>input;
             }
@@ -192,16 +192,17 @@ void fNPC::sell(Player& p)
     std::string input="info";
     
     while (cheat and input!="стоп")
-    {
-        input="";
-        p.print_info();
+    {        p.show_inv();
+        std::cout<<std::endl;
         std::cout<<"На продажу есть:\n";
         npc_inv.show_for_selling();
-        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info, или стоп\n";
-        std::cin>>input;
+        //std::string input;
+        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info, или стоп"<<std::endl;
+        //std::cin.ignore(1,'\n');
+        std::getline(std::cin,input);
         while (input=="info")
         {
-            p.print_info();
+            p.show_inv();
             std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info, или стоп\n"<<std::endl;
             std::cin>>input;
         }
@@ -322,6 +323,10 @@ void sell_to_npc(std::string items, fNPC& seller, Player& p)
             std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info или стоп\n"<<std::endl;
             std::cin>>input;
         }
+        
+        
+        
+        
     }
     
 }

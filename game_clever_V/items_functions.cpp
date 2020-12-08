@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include "units.h"
 #include <iostream>
-#include "items.hpp"
 #include <map>
 
 extern std::map <std::string, Food> food_list;
@@ -85,7 +84,7 @@ void Player::add_item(Armory item)
     {
         carrying-=item.weight;
         a_bag.push_back(item);
-        a_bag.back().count++;
+        //a_bag.back().count++;
         return;
     }
     else

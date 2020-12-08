@@ -5,11 +5,10 @@
 //  Created by denis  on 15.10.2020.
 //  Copyright © 2020 denis . All rights reserved.
 // проверяю, что все работает(1)6
-#include "items.hpp"
-#include <vector>
+
 #ifndef units_h
 #define units_h
-
+#include "items.hpp"
 
 
 struct level
@@ -142,6 +141,8 @@ protected:
 public:
     Player();
     level level;
+    void show_ar();
+
     void print_invetory();
     void fatigue();
     void show_inv();
@@ -190,4 +191,5 @@ public:
 void p_attack(Enemy& target, Player& p,int i);
 void fight_pve(Player& p, Enemy& u,int i);
 void sell_to_npc(std::string items, fNPC& seller, Player& p);
+
 #endif /* units_h */

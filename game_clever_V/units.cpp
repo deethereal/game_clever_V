@@ -10,12 +10,21 @@
 #include <string>
 #include <iostream>
 #include "units.h"
-#include "items.hpp"
 #include <map>
 
 extern bool e_killed[1];
-std::map <std::string, Armor> armory = {{"c_base", Armor(2)}, {"m_base", Armor(1)}, {"w_base", Armor(0)}};
-std::map <std::string, Weapon> weapon = {{"ветхая книга", Weapon(2)}, {"m_base", Weapon(1)}, {"w_base", Weapon(0)}};
+/*
+extern std::string type[3];
+extern std::string w_name[3];
+extern int w_strength [3];
+extern int w_weight[3];
+
+extern int a_protection [3];
+extern int a_weight[3];
+extern std::string a_name[3];*/
+
+std::map <std::string, Armor> armory = {{"церковная роба", Armor(2)}, {"роба школы магии", Armor(1)}, {"комлпект железных доспехов", Armor(0)}};
+std::map <std::string, Weapon> weapon = {{"ветхая книга", Weapon(2)}, {"палка заклиналка", Weapon(1)}, {"ржавый меч", Weapon(0)}};
 std::map <std::string, Food> food_list={{"хлеб", Food(0,0,0)} };
 
 
@@ -178,6 +187,7 @@ fNPC::fNPC(int value, std::string type_drop, std::vector<std::string> drop_id_f,
         if (we)
             for (int i=0;i<drop_id_w.size();i++)
             {
+                std::cout<<drop_id_w[i]<<"\n";
                 npc_inv.w_part.push_back(weapon.find(drop_id_w[i])->second);
                 npc_inv.w_part.back().count=w_count[i];
                 npc_inv.w_part.back().Item::cost=w_cost[i];
@@ -408,13 +418,28 @@ void Player::print_info()
     std::cout<<"Cнаряжение: "<<p_ar.second.name<<std::endl;
     std::cout<<"Уровень: "<<level.level<<std::endl;
     std::cout<<"Прогресс уровня: "<<level.level_bar<<"/100"<<std::endl;
+    std::cout<<"Деньги: "<<money<<std::endl;
     std::cout<<"Голод: "<<hunger<<std::endl;
     std::cout<<"Оружие: "<<p_ar.first.name<<std::endl;
     std::cout<<"Вес:  "<<carrying<<"/ "<<max_carrying<<std::endl;
     std::cout<<"Из еды у вас есть: "; print_invetory(); std::cout<<std::endl;
+    show_ar();
 }
-void show_inv()
+void Player::show_ar()
 {
+    std::cout<<"Из снаряжения у вас есть:"<<std::endl;
+    for (int i=0;i<a_bag.size();i++)
+        std::cout<<a_bag[i].name<<"-"<<a_bag[i].count<<" ";
+    std::cout<<std::endl;
+}
+void Player::show_inv()
+{
+    std::cout<<"Деньги: "<<money<<std::endl;
+    std::cout<<"Cнаряжение: "<<p_ar.second.name<<std::endl;
+    std::cout<<"Оружие: "<<p_ar.first.name<<std::endl;
+    std::cout<<"Вес:  "<<carrying<<"/ "<<max_carrying<<std::endl;
+    std::cout<<"Из еды у вас есть: "; print_invetory(); std::cout<<std::endl;
+    show_ar();
     
 }
 Player::~Player(){}

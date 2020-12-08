@@ -9,9 +9,11 @@
 #include <iostream>
 #include "units.h"
 #include <typeinfo>
-#include <vector>
 #include <cstdlib>
 #include <fstream>
+
+
+
 using namespace std;
 
 std::string PATH = "/Users/denis/Documents/stage_two/game_clever_V/game_clever_V/lor.txt";
@@ -126,7 +128,7 @@ int main()
     {
         while (answer=="д")
         {
-        fNPC torgash(100,{"fw"},{"хлеб","ветхая книга"},{100,1},{1,1});
+            fNPC torgash(100,{"fw"},{"хлеб"},{100},{1},{"ветхая книга"},{4},{1});
         torgash.sell(player);
         
         }
