@@ -102,7 +102,7 @@ protected:
     int health;
     int MAX_HEALTH;
     int armor;
-    int money=0;
+    float money=0;
     int mana;
     int MAX_MANA;
     int magic_damage=20;
@@ -111,9 +111,9 @@ protected:
   
 public:
     inventory create_inv(std::vector<std::pair<std::string, int>> items_list);
-    void money_increase(int value);
-    void money_decrease(int value);
-    int return_money();
+    void money_increase(float value);
+    void money_decrease(float value);
+    float return_money();
     void get_damage(int damage);
     int damage(Unit& target, Unit& attacker);
     bool is_p=false;
@@ -134,18 +134,19 @@ protected:
     void add_food(Food snack);
     Armor p_armor;
     Weapon p_weapon;
-    std::vector<Armory> a_bag;
-    std::vector <Food> f_bag;
+   
 
     
 public:
     Player();
+    std::vector<Armory> a_bag;
+    std::vector <Food> f_bag;
     level level;
-    void show_ar();
+    void show_ar(bool selling=false);
 
-    void print_invetory();
+    void print_invetory(bool selling=false);
     void fatigue();
-    void show_inv();
+    void show_inv(bool selling=false);
     void otladka_goloda();
     void print_info();
     bool is_alive();
@@ -154,7 +155,7 @@ public:
     void drop_food(std::string name);
     void have_a_dinner(std::string name);
     void take_items(inventory from);
-    
+    void delete_part(inventory what);
     bool healing(int count);
     int pray(int target);  //target = 1, если враг,target= 0, если персонаж
     ~Player();
@@ -166,9 +167,11 @@ protected:
     inventory npc_inv;
 public:
     fNPC();
-    fNPC(int value, std::string type_drop="", std::vector<std::string> drop_id_f={"1"}, std::vector<int> f_count={1}, std::vector<int> f_cost={1}, std::vector<std::string> drop_id_w={"1"}, std::vector<int> w_count={1}, std::vector<int> w_cost={1},
+    fNPC(int value, std::string type_drop="", float coef=2,std::vector<std::string> drop_id_f={"1"}, std::vector<int> f_count={1}, std::vector<int> f_cost={1}, std::vector<std::string> drop_id_w={"1"}, std::vector<int> w_count={1}, std::vector<int> w_cost={1},
          std::vector<std::string> drop_id_a={"1"}, std::vector<int> a_count={1}, std::vector<int> a_cost={1});
     void sell(Player& p);
+    float mult;
+    void add_items(inventory bag);
     ~fNPC();
     
 };
@@ -190,6 +193,6 @@ public:
 };
 void p_attack(Enemy& target, Player& p,int i);
 void fight_pve(Player& p, Enemy& u,int i);
-void sell_to_npc(std::string items, fNPC& seller, Player& p);
+void sell_to_npc(fNPC& seller, Player& p);
 
 #endif /* units_h */

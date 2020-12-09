@@ -17,16 +17,15 @@
 class Item
 {
 protected:
-    int i_cost[1]={10};
+    float i_cost[4]={0.5,5,40,100};
     //int rarity;
 public:
     int weight;
     int count=0;
-    int cost;
+    float cost;
     std::string name;
     int sell(int stoimost);
     Item();
-    Item(int i);
     ~Item();
     
 };
@@ -47,7 +46,7 @@ public:
     std::string type_of_dam;
     int strength;
     Weapon();
-    Weapon(int i);
+    Weapon(int i,int abscost_id);
     ~Weapon();
 };
 
@@ -59,7 +58,7 @@ public:
     std::string a_name[3]={"комлпект железных доспехов", "роба школы магии", "церковная роба" };
     int protection;
     Armor();
-    Armor(int i);
+    Armor(int i,int abscost_id);
     ~Armor();
 };
 class Food:public Item
@@ -68,10 +67,9 @@ public:
     int f_weight[1]={2};
     int f_satiety[1]={5};
     std::string f_name[1]={"хлеб"};
-    int count;
     Food();
     int satiety;
-    Food(int name_i, int satiety_i, int weight_i );
+    Food(int name_i, int satiety_i, int weight_i,int abscost_id );
     ~Food();
 };
 

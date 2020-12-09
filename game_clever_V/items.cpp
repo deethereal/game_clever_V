@@ -15,35 +15,31 @@
 
 
 Item::Item() {}
-Item::Item(int i) {
-    
-    cost = i_cost[i];
-}
 Armory::Armory()
 {}
 
 Weapon::Weapon(){}
-Weapon::Weapon(int i)
+Weapon::Weapon(int i, int abscost_id)
 {
-    
+    cost=i_cost[abscost_id];
     strength = w_strength[i];
     name = w_name[i];
     weight = w_weight[i];
     type_of_dam = type[i];
 }
 Armor::Armor(){}
-Armor::Armor(int i)
+Armor::Armor(int i,int abscost_id)
 {
+    cost=i_cost[abscost_id];
     protection = a_protection[i];
     name = a_name[i];
     weight =a_weight[i];
     
 }
 Food::Food(){}
-Food::Food(int name_i, int satiety_i, int weight_i)
+Food::Food(int name_i, int satiety_i, int weight_i,int abscost_id)
 {
-    
-    count=0;
+    cost=i_cost[abscost_id];
     weight=f_weight[weight_i];
     satiety = f_satiety[satiety_i];
     name=f_name[name_i];

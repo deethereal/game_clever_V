@@ -128,9 +128,10 @@ int main()
     {
         while (answer=="д")
         {
-            fNPC torgash(100,{"fw"},{"хлеб"},{100},{1},{"ветхая книга"},{4},{1});
-        torgash.sell(player);
-        
+            fNPC torgash(100,{"fw"},2,{"хлеб"},{100},{1},{"ветхая книга"},{4},{1});
+            torgash.sell(player);
+            cout<<endl;
+            sell_to_npc( torgash, player);
         }
     }
     //РЕАЛИЗОВАТЬ КЛАСС fNPC и функцию trade

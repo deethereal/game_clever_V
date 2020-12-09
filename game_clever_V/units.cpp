@@ -23,9 +23,9 @@ extern int a_protection [3];
 extern int a_weight[3];
 extern std::string a_name[3];*/
 
-std::map <std::string, Armor> armory = {{"церковная роба", Armor(2)}, {"роба школы магии", Armor(1)}, {"комлпект железных доспехов", Armor(0)}};
-std::map <std::string, Weapon> weapon = {{"ветхая книга", Weapon(2)}, {"палка заклиналка", Weapon(1)}, {"ржавый меч", Weapon(0)}};
-std::map <std::string, Food> food_list={{"хлеб", Food(0,0,0)} };
+std::map <std::string, Armor> armory = {{"церковная роба", Armor(2,2)}, {"роба школы магии", Armor(1,2)}, {"комлпект железных доспехов", Armor(0,2)}};
+std::map <std::string, Weapon> weapon = {{"ветхая книга", Weapon(2,2)}, {"палка заклиналка", Weapon(1,2)}, {"ржавый меч", Weapon(0,3)}};
+std::map <std::string, Food> food_list={{"хлеб", Food(0,0,0,0)} };
 
 
 Unit::Unit()
@@ -169,10 +169,11 @@ Player::Player()
     add_food(food_list.find("хлеб")->second);
     is_p=true;
 }
-fNPC::fNPC(int value, std::string type_drop, std::vector<std::string> drop_id_f, std::vector<int> f_count, std::vector<int> f_cost, std::vector<std::string> drop_id_w, std::vector<int> w_count, std::vector<int> w_cost,
+fNPC::fNPC(int value, std::string type_drop,float coef, std::vector<std::string> drop_id_f, std::vector<int> f_count, std::vector<int> f_cost, std::vector<std::string> drop_id_w, std::vector<int> w_count, std::vector<int> w_cost,
            std::vector<std::string> drop_id_a, std::vector<int> a_count, std::vector<int> a_cost)
 {
     money=value;
+    mult=coef;
     bool we=false;
     bool ar=false;
     bool fo=false;
@@ -207,7 +208,48 @@ fNPC::fNPC(int value, std::string type_drop, std::vector<std::string> drop_id_f,
                 npc_inv.f_part.back().Item::cost=f_cost[i];
             }
 }
-
+void fNPC::add_items(inventory bag)
+{
+    for (int j=0;j<bag.a_part.size(); j++)
+    {
+        Armor item=bag.a_part[j];
+        for (int i=0;i<npc_inv.a_part.size();i++)
+             if (item.name==npc_inv.a_part[i].name)
+                 npc_inv.a_part[i].count+=item.count;
+             else
+             {
+                 npc_inv.a_part.push_back(armory.find(item.name)->second);
+                 npc_inv.a_part.back().count=item.count;
+                 npc_inv.a_part.back().cost=mult*item.cost;
+             }
+    }
+    for (int j=0;j<bag.w_part.size(); j++)
+    {
+        Weapon item=bag.w_part[j];
+        for (int i=0;i<npc_inv.w_part.size();i++)
+             if (item.name==npc_inv.w_part[i].name)
+                 npc_inv.w_part[i].count+=item.count;
+             else
+             {
+                 npc_inv.w_part.push_back(weapon.find(item.name)->second);
+                 npc_inv.w_part.back().count=item.count;
+                 npc_inv.w_part.back().cost=mult*item.cost;
+             }
+    }
+    for (int j=0;j<bag.f_part.size(); j++)
+    {
+        Food item=bag.f_part[j];
+        for (int i=0;i<npc_inv.f_part.size();i++)
+             if (item.name==npc_inv.f_part[i].name)
+                 npc_inv.f_part[i].count+=item.count;
+             else
+             {
+                 npc_inv.f_part.push_back(food_list.find(item.name)->second);
+                 npc_inv.f_part.back().count=item.count;
+                 npc_inv.f_part.back().cost=mult*item.cost;
+             }
+    }
+}
 void Player::otladka_goloda()
 {
     hunger-=20;
@@ -240,7 +282,7 @@ inventory Enemy::E_is_alive(int g_damage, Player& p, int i) //функция с�
             std::cout<<"Из моба выпало"<<std::endl;
             temp=mob_drop();
         }
-        std::cout<<"Кстати, с него выпало немного денег: "<<return_money()<<" монет";
+        std::cout<<"Кстати, с него выпало немного денег: "<<return_money()<<" монет\n";
         e_killed[i]=true;
 
     }
@@ -338,16 +380,16 @@ int Unit::damage(Unit& target, Unit& attacker)
     
     return mhp;
 }
-int Unit::return_money()
+float Unit::return_money()
 {
     return money;
 }
-void Unit::money_increase(int value)
+void Unit::money_increase(float value)
 {
     money+=value;
 }
 
-void Unit::money_decrease(int value)
+void Unit::money_decrease(float value)
 {
     money-=value;
 }
@@ -356,11 +398,14 @@ void Player::fatigue()
     hunger--;
     is_hungry();
 }
-void Player::print_invetory()
+void Player::print_invetory(bool selling)
 {
     int i=0;
     while (i<f_bag.size()) {
         std::cout<<f_bag[i].count<<" "<<f_bag[i].name<<" ";
+        
+        if (selling)
+            std::cout<<"за "<<f_bag[i].cost;
         i++;
     }
 }
@@ -425,21 +470,25 @@ void Player::print_info()
     std::cout<<"Из еды у вас есть: "; print_invetory(); std::cout<<std::endl;
     show_ar();
 }
-void Player::show_ar()
+void Player::show_ar(bool selling)
 {
     std::cout<<"Из снаряжения у вас есть:"<<std::endl;
     for (int i=0;i<a_bag.size();i++)
+    {
         std::cout<<a_bag[i].name<<"-"<<a_bag[i].count<<" ";
+        if (selling)
+            std::cout<<"за "<<a_bag[i].cost<<" ";
+    }
     std::cout<<std::endl;
 }
-void Player::show_inv()
+void Player::show_inv(bool selling)
 {
     std::cout<<"Деньги: "<<money<<std::endl;
     std::cout<<"Cнаряжение: "<<p_ar.second.name<<std::endl;
     std::cout<<"Оружие: "<<p_ar.first.name<<std::endl;
     std::cout<<"Вес:  "<<carrying<<"/ "<<max_carrying<<std::endl;
-    std::cout<<"Из еды у вас есть: "; print_invetory(); std::cout<<std::endl;
-    show_ar();
+    std::cout<<"Из еды у вас есть: "; print_invetory(selling); std::cout<<std::endl;
+    show_ar(selling);
     
 }
 Player::~Player(){}

@@ -147,6 +147,33 @@ inventory Enemy::mob_drop()
     loot_1.w_part=e_inv.w_part;
     return loot_1;
 }
+void Player::delete_part(inventory what)
+{
+    for (int i=0;i<what.f_part.size();i++)
+        for (int j=0;j<f_bag.size();j++)
+            if (what.f_part[i].name==f_bag[j].name)
+            {
+                f_bag[j].count-=what.f_part[i].count;
+                if (f_bag[j].count==0)
+                    f_bag.erase(f_bag.begin() + j);
+            }
+    for (int i=0;i<what.a_part.size();i++)
+        for (int j=0;j<a_bag.size();j++)
+            if (what.a_part[i].name==a_bag[j].name)
+            {
+                a_bag[j].count-=what.a_part[i].count;
+                if (a_bag[j].count==0)
+                    a_bag.erase(a_bag.begin() + j);
+            }
+    for (int i=0;i<what.w_part.size();i++)
+        for (int j=0;j<a_bag.size();j++)
+            if (what.w_part[i].name==a_bag[j].name)
+            {
+                a_bag[j].count-=what.w_part[i].count;
+                if (a_bag[j].count==0)
+                    a_bag.erase(a_bag.begin() + j);
+            }
+}
 inventory Unit::create_inv(std::vector<std::pair<std::string, int>> items_list)
 {
     inventory loot_1;

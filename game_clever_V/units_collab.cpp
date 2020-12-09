@@ -50,6 +50,7 @@ std::vector<std::pair<std::string, int>> string_split(const std::string& S) //р
 
 void p_attack(Enemy& target, Player& p,int i)
 {
+    int flag = 0;
     if (target.hp_positive())
     {
         inventory mob_drop = target.E_is_alive(p.damage(target, p),p,i);
@@ -58,15 +59,20 @@ void p_attack(Enemy& target, Player& p,int i)
             std::string input="info";
             while (input!="стоп")
             {
-            std::cout<<"цель мертва"<<std::endl;
+            if (flag==1)
+            {
+            std::cout<<"\nЦЕЛЬ МЕРТВА\n"<<std::endl; //выяснить почему два раза выводится 
             mob_drop.show();
             std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или info, или стоп"<<std::endl;
-            std::cin>>input;
+            }
+                std::getline(std::cin,input);
+            if (flag==1)
+            {
             while (input=="info")
             {
                 p.show_inv();
                 std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или info, или стоп"<<std::endl;
-                std::cin>>input;
+                std::getline(std::cin,input);
             }
 
             std::vector<std::pair<std::string, int>> inv = string_split(input);
@@ -116,13 +122,17 @@ void p_attack(Enemy& target, Player& p,int i)
                 std::cout<<"\n";
                 delete_it(mob_drop, temp);
                 p.money_increase(target.return_money());
-                std::cout<<"\nТеперь у вас"<<p.return_money()<<" монет\n";
+                std::cout<<"\nТеперь у вас "<<p.return_money()<<" монет\n";
             }
             else
                 input="-1";
         }
+        flag=1;
         }
+        
 }
+        
+    }
 }
 void Enemy::e_attack(Player& p, Enemy& e)
     {
@@ -212,9 +222,8 @@ void fNPC::sell(Player& p)
         {
             p.show_inv();
             std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info, или стоп\n"<<std::endl;
-            std::cin>>input;
+            std::getline(std::cin,input);
         }
-        
         std::vector<std::pair<std::string, int>> inv = string_split(input);
         cheat=false;
         //проверка на то, что вещей достаточно
@@ -257,14 +266,13 @@ void fNPC::sell(Player& p)
             j++;
         }
         
-    
     if (not cheat)
     {
         inventory temp=p.create_inv(inv);
-        int sum=0;
+        float sum=0;
         int i=0;
         while (i<temp.f_part.size()) {
-            int cost_i=0;
+            float cost_i=0;
             for (int j=0;j<npc_inv.f_part.size();j++)
             {
                 if (temp.f_part[i].name==npc_inv.f_part[j].name)
@@ -275,7 +283,7 @@ void fNPC::sell(Player& p)
         }
         i=0;
         while (i<temp.w_part.size()) {
-            int cost_i=0;
+            float cost_i=0;
             for (int j=0;j<npc_inv.w_part.size();j++)
             {
                 if (temp.w_part[i].name==npc_inv.w_part[j].name)
@@ -286,7 +294,7 @@ void fNPC::sell(Player& p)
         }
         i=0;
         while (i<temp.a_part.size()) {
-            int cost_i=0;
+            float cost_i=0;
             for (int j=0;j<npc_inv.a_part.size();j++)
             {
                 if (temp.a_part[i].name==npc_inv.a_part[j].name)
@@ -311,33 +319,121 @@ void fNPC::sell(Player& p)
     }
     }
     }
-        flag=1;
-        sleep(1);
+        if (flag==1)
+            sleep(3);
+        else
+            flag=1;
     }
 }
-void sell_to_npc(std::string items, fNPC& seller, Player& p)
+void sell_to_npc(fNPC& seller, Player& p)
 {
-    std::cout<<"У торговца есть "<<seller.return_money()<<"  монет\n";
+    
     std::vector<std::pair<std::string, int>> inv;
     bool cheat=true;
-    std::string input="info";
-    
+    std::string input="";
     while (cheat and input!="стоп")
     {
-        input="info";
-        std::cout<<"Введите, что вы хотите продать или info, или стоп\n";
-        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info\n или стоп\n";
-        std::cin>>input;
+        std::cout<<"У торговца есть "<<seller.return_money()<<"  монет\n";
+        p.print_invetory(true);//передается нужно ли выводить стоимость
+        std::cout<<"\nВведите название вещей и количество, которое хотите продать(вещь-количество) или info\n или стоп\n";
+        std::getline(std::cin,input);
         while (input=="info")
         {
-            p.print_info();
-            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество через запятую без пробелов) или info или стоп\n"<<std::endl;
-            std::cin>>input;
+            p.print_invetory(true);//передается нужно ли выводить стоимость
+            std::cout<<"Введите название вещей и количество, которое хотите продать(вещь-количество через запятую без пробелов) или info или стоп\n"<<std::endl;
+            std::getline(std::cin,input);
+        }
+        std::vector<std::pair<std::string, int>> inv = string_split(input);
+        cheat=false;
+        if (input!="стоп")
+        {
+            int j=0;
+            while (j< inv.size() and not cheat)
+            {
+                int i=0;
+                while (i<p.f_bag.size() and (not cheat))
+                {
+                    if ((p.f_bag[i].name==inv[j].first) and (p.f_bag[i].count<inv[j].second))
+                    {
+                        std::cout<<"У вас нет столько вещей!\n";
+                        cheat=true;
+                    }
+                    i++;
+                }
+                i=0;
+                while (i<p.a_bag.size() and (not cheat))
+                {
+                    if ((p.a_bag[i].name==inv[j].first) and (p.a_bag[i].count<inv[j].second))
+                    {
+                        std::cout<<"У вас нет столько вещей!\n";
+                        cheat=true;
+                    }
+                    i++;
+                }
+
+                j++;
+            }
+            if (not cheat)
+            {
+                inventory temp=p.create_inv(inv);
+                float sum=0;
+                int i=0;
+                while (i<temp.f_part.size()) {
+                    float cost_i=0;
+                    for (int j=0;j<p.f_bag.size();j++)
+                    {
+                        if (temp.f_part[i].name==p.f_bag[j].name)
+                            cost_i=p.f_bag[j].cost;
+                    }
+                    sum+=(temp.f_part[i].count*cost_i);
+                    i++;
+                }
+                i=0;
+                while (i<temp.w_part.size()) {
+                    float cost_i=0;
+                    for (int j=0;j<p.a_bag.size();j++)
+                    {
+                        if (temp.w_part[i].name==p.a_bag[j].name)
+                            cost_i=p.a_bag[j].cost;
+                    }
+                    sum+=(temp.w_part[i].count*cost_i);
+                    i++;
+                }
+                i=0;
+                while (i<temp.a_part.size()) {
+                    float cost_i=0;
+                    for (int j=0;j<p.a_bag.size();j++)
+                    {
+                        if (temp.a_part[i].name==p.a_bag[j].name)
+                            cost_i=p.a_bag[j].cost;
+                    }
+                    sum+=(temp.a_part[i].count*cost_i);
+                    i++;
+                }
+                if (seller.return_money()>=sum)
+                {
+                    p.money_increase(sum);
+                    seller.money_decrease(sum);
+                    std::cout<<"вы заработали "<<sum<<" монет!\n";
+                    seller.add_items(temp);
+                    std::cout<<"\n";
+                    p.delete_part(temp);
+                }
+                else{
+                    
+                    std::cout<<"У продавца не хватает денег\n";
+                }
+                cheat=true;
+            }
+            
+            
+            
+            
+            
         }
         
-        
-        
-        
+        sleep(3);
+
     }
     
 }
