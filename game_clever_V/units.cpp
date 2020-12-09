@@ -113,25 +113,26 @@ Player::Player()
         std::cout<<"Это не являтеся расой, выберите одну из предложенных"<<std::endl;
     }
     race=mb_race;
+    money=5;
     if (race=="дракон")
         MAX_HEALTH=120; 
     else
         MAX_HEALTH=100;
     health=MAX_HEALTH;
+    armor=0;
     if (race=="дворф")
         armor=10;
-    else
-        armor=0;
-    if (race=="гоблин")
+    else if (race=="гоблин")
         money = 50;
-    if (race=="орк")
+    else if (race=="орк")
         physic_damage+=3;
-    if (race=="эльф")
+    else if (race=="эльф")
         magic_damage+=3;
-    if (race=="троль")
+    else if (race=="троль")
         p_mult=0.1;
-    else
-        money=5;
+
+  
+    
     hunger=0;
    
     level.level=1;
@@ -143,16 +144,16 @@ Player::Player()
         p_mult+=0.25;
         max_carrying=50;
         carrying=max_carrying;
-        p_ar.first=(weapon.find("w_base"))->second;
-        p_ar.second=armory.find("w_base")->second;
+        p_ar.first=(weapon.find("ржавый меч"))->second;
+        p_ar.second=armory.find("комлпект железных доспехов")->second;
     }
     else if (clas=="маг")
     {
         magic_damage+=5;
         max_carrying=40;
         carrying=max_carrying;
-        p_ar.first=weapon.find("m_base")->second;
-        p_ar.second=armory.find("m_base")->second;
+        p_ar.first=weapon.find("палка заклиналка")->second;
+        p_ar.second=armory.find("роба школы магии")->second;
     }
     else if (clas=="клерик")
     {
@@ -160,8 +161,8 @@ Player::Player()
         magic_damage-=5;
         max_carrying=29;
         carrying=max_carrying;
-        p_ar.first=weapon.find("c_base")->second;
-        p_ar.second=armory.find("c_base")->second;
+        p_ar.first=weapon.find("ветхая книга")->second;
+        p_ar.second=armory.find("церковная роба")->second;
     }
     if (race=="каджит")
         add_food(food_list.find("хлеб")->second);
@@ -187,7 +188,6 @@ fNPC::fNPC(int value, std::string type_drop, std::vector<std::string> drop_id_f,
         if (we)
             for (int i=0;i<drop_id_w.size();i++)
             {
-                std::cout<<drop_id_w[i]<<"\n";
                 npc_inv.w_part.push_back(weapon.find(drop_id_w[i])->second);
                 npc_inv.w_part.back().count=w_count[i];
                 npc_inv.w_part.back().Item::cost=w_cost[i];

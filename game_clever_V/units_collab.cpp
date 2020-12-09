@@ -10,6 +10,7 @@
 #include "units.h"
 #include <iostream>
 #include <map>
+#include <unistd.h>
 
 extern std::map <std::string, Food> food_list;
 extern std::map <std::string, Armor> armory;
@@ -190,16 +191,23 @@ void fNPC::sell(Player& p)
     std::vector<std::pair<std::string, int>> inv;
     bool cheat=true;
     std::string input="info";
-    
+    int flag=0;
     while (cheat and input!="стоп")
-    {        p.show_inv();
-        std::cout<<std::endl;
-        std::cout<<"На продажу есть:\n";
-        npc_inv.show_for_selling();
-        //std::string input;
-        std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info, или стоп"<<std::endl;
-        //std::cin.ignore(1,'\n');
+    {
+        
+        if (flag==1)
+        {
+            std::cout<<"Ваши вещи:\n";
+            p.show_inv();
+            std::cout<<std::endl;
+            std::cout<<"На продажу есть:\n";
+            npc_inv.show_for_selling();
+            std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество) или info, или стоп"<<std::endl;
+        }
         std::getline(std::cin,input);
+        if (flag ==1)
+        {
+        
         while (input=="info")
         {
             p.show_inv();
@@ -302,6 +310,9 @@ void fNPC::sell(Player& p)
         cheat=true;
     }
     }
+    }
+        flag=1;
+        sleep(1);
     }
 }
 void sell_to_npc(std::string items, fNPC& seller, Player& p)
