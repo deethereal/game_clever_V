@@ -26,7 +26,15 @@ extern std::string a_name[3];*/
 std::map <std::string, Armor> armory = {{"церковная роба", Armor(2,2)}, {"роба школы магии", Armor(1,2)}, {"комлпект железных доспехов", Armor(0,2)}};
 std::map <std::string, Weapon> weapon = {{"ветхая книга", Weapon(2,2)}, {"палка заклиналка", Weapon(1,2)}, {"ржавый меч", Weapon(0,3)}};
 std::map <std::string, Food> food_list={{"хлеб", Food(0,0,0,0)} };
+bool check(std::vector <Armory> vec, Armory shtuka)
+{
+     
+    for (int i=0;i<vec.size();i++)
+        if (shtuka.equal(vec[i]))
+            return true;
+    return false;
 
+}
 
 Unit::Unit()
 {
@@ -97,6 +105,13 @@ Player::Player()
     std::cout<<"Выберите расу"<<std::endl;
     for(int i=0;i<8;i++)
         std::cout<<races[i]<<" ";
+    std::cout<<"орк -- повышенная физ атака";
+    std::cout<<"дворф -- повышенная броня";
+    std::cout<<"гоблин -- увеличенное количество денег";
+    std::cout<<"эльф -- повышенная маг атака";
+    std::cout<<"тролль -- повышенное самоизлечение";
+    std::cout<<"драконоид -- повышенное здоровье";
+    std::cout<<"каджит -- больше начальной еды";
     std::cout<<std::endl;
     std::string mb_race;
     int temp = -1;
@@ -114,7 +129,7 @@ Player::Player()
     }
     race=mb_race;
     money=5;
-    if (race=="дракон")
+    if (race=="драконоид")
         MAX_HEALTH=120; 
     else
         MAX_HEALTH=100;
@@ -451,7 +466,56 @@ void Player::have_a_dinner(std::string name)
             }
     std::cout<<"У вас нет такого предмета в инвентаре"<<std::endl;
 }
-
+void Player::equip(std::string thing)
+{
+    auto search1=weapon.find(thing);
+    auto search2=armory.find(thing);
+    if (search1!=weapon.end())
+    {
+        
+        if (check(a_bag, search1->second) and add_item(search1->second))
+        {
+            int idx=0;
+            for (int i=0;i<a_bag.size();i++)
+                if (search1->second.equal(a_bag[i]))
+                {
+                    idx=i;
+                    break;
+                }
+            a_bag[idx].count-=2;
+            if (a_bag[idx].count==0)
+                a_bag.erase(a_bag.begin()+idx);
+            carrying+=(search1->second).weight;
+            add_item(p_ar.first);
+            p_ar.first=search1->second;
+        }
+    }
+    else if (check(a_bag, search2->second) and search2!=armory.end())
+    {
+        if (add_item(search2->second))
+        {
+            int idx=0;
+            for (int i=0;i<a_bag.size();i++)
+                if (search1->second.equal(a_bag[i]))
+                {
+                    idx=i;
+                    break;
+                }
+            a_bag[idx].count-=2;
+            if (a_bag[idx].count==0)
+                a_bag.erase(a_bag.begin()+idx);
+            carrying+=(search2->second).weight;
+            add_item(p_ar.second);
+            p_ar.second=search2->second;
+        }
+    }
+    else
+    {
+        std::cout<<"У вас нет такого предмета\n";
+    }
+        
+    
+}
 void Player::print_info()
 {
     std::cout<<std::endl;

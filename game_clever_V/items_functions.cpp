@@ -65,7 +65,7 @@ void Player::drop_food(std::string name)
     std::cout<<"у вас нет такого предмета"<<std::endl;
     return;
 }
-void Player::add_item(Armory item)
+bool Player::add_item(Armory item)
 {
    for (int i=0;i<a_bag.size();i++)
         if (item.name==a_bag[i].name)
@@ -74,22 +74,23 @@ void Player::add_item(Armory item)
             {
                 carrying-=item.weight;
                 a_bag[i].count++;
-                return;
+                return true;
             }
             else
                 std::cout<<"Вы не можете столько поднять"<<std::endl;
-            return;
+            return false;
         }
     if (carrying-item.weight>=0)
     {
         carrying-=item.weight;
         a_bag.push_back(item);
-        //a_bag.back().count++;
-        return;
+        if (a_bag.back().count==0)
+            a_bag.back().count++;
+        return true;
     }
     else
         std::cout<<"Вы не можете столько поднять"<<std::endl;
-    return;
+    return false;
     
 }
 void Player::take_items(inventory from)

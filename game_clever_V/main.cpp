@@ -18,10 +18,7 @@ using namespace std;
 
 std::string PATH = "/Users/denis/Documents/stage_two/game_clever_V/game_clever_V/lor.txt";
 std::ifstream lf(PATH);
-void help()
-{
-    cout<<"Вы можете:\nполечиться\nnоесть\ninfo\nвыкинуть";
-}
+
 void print_s()
 {
     string s;
@@ -63,6 +60,8 @@ int main()
     
     print_s(); //предложение про гнома
     std::cin>>answer;
+    while (answer!="н")
+    {
     if (answer=="д")
     {
         Enemy gnom("гуманоид", 60,99,15,"физ",20,15, "f", {"хлеб"}, {10});
@@ -86,6 +85,12 @@ int main()
             fight_pve(player, gnom,0);
         }
     }
+    else if (answer!="н")
+    {
+        cout<<"Введите ответ д/н\n";
+        cin>>answer;
+    }
+    }
     if (e_killed[0])
     {
         cout<<"Ну и задал ты этому гному\n ";
@@ -96,34 +101,12 @@ int main()
     
     
     print_s();//привал
-    while (command!="стоп")
-        {
-            std::cin>>command;
-            if (command=="полечиться")
-            {
-                if(player.healing(player.pray(0)))
-                    player.fatigue();
-            }
-            else if (command =="поесть")
-            {
-                std::cout<<"что вы хотите съесть?"<<std::endl;
-                player.print_invetory();
-                std::string snack;
-                std::cin>>snack;
-                player.have_a_dinner(snack);
-            }
-            else if (command == "выкинуть")
-                player.drop_food("хлеб");
-            else if (command == "info")
-                player.print_info();
-            else if (command =="/помощь")
-                help();
-            
-        }
-    cout<<"Вы закончили привал и ложитесь спать, завтра вам предстоит долгий-долгий день....\n\n\n....\n\n\n";
+    player.prival();
     cout<<"День второй\n\n";
     print_s();//зашли в город
     std::cin>>answer;
+    while (answer!="н")
+    {
     if (answer=="д")
     {
         while (answer=="д")
@@ -132,7 +115,19 @@ int main()
             torgash.sell(player);
             cout<<endl;
             sell_to_npc( torgash, player);
+            cout<<"Хотите продолжить торговать?\n";
+            cin>>answer;
         }
+        print_s();//привал
+        player.prival();
+        
+        
+    }
+    else if (answer!="н")
+    {
+        cout<<"Введите ответ д/н\n";
+        cin>>answer;
+    }
     }
     //РЕАЛИЗОВАТЬ КЛАСС fNPC и функцию trade
     return 0;

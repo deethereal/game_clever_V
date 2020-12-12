@@ -33,7 +33,7 @@ class Armory: public Item
 {
 public:
     Armory();
-    
+    bool equal(Armory one);
     ~Armory();
 };
 class Weapon :public Armory

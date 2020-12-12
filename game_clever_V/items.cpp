@@ -13,7 +13,13 @@
 
 
 
-
+bool Armory::equal(Armory one)
+{
+    if (one.name==name)
+        return true;
+    else
+        return false;
+}
 Item::Item() {}
 Armory::Armory()
 {}

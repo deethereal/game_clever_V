@@ -98,7 +98,7 @@ protected:
     std::string gender;
     std::string name;
     std::string race;
-    std::string races[8] = {"орк", "эльф", "человек", "дворф", "тролль", "гоблин", "дракон", "каджит"};
+    std::string races[8] = {"орк", "эльф", "человек", "дворф", "тролль", "гоблин", "драконоид", "каджит"};
     int health;
     int MAX_HEALTH;
     int armor;
@@ -130,10 +130,8 @@ protected:
     float p_mult=0;
     int hunger;
     
-    void add_item(Armory item);
+    bool add_item(Armory item);
     void add_food(Food snack);
-    Armor p_armor;
-    Weapon p_weapon;
    
 
     
@@ -142,8 +140,9 @@ public:
     std::vector<Armory> a_bag;
     std::vector <Food> f_bag;
     level level;
+    void prival();
     void show_ar(bool selling=false);
-
+    void equip(std::string thing);
     void print_invetory(bool selling=false);
     void fatigue();
     void show_inv(bool selling=false);
@@ -194,5 +193,4 @@ public:
 void p_attack(Enemy& target, Player& p,int i);
 void fight_pve(Player& p, Enemy& u,int i);
 void sell_to_npc(fNPC& seller, Player& p);
-
 #endif /* units_h */

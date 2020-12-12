@@ -437,3 +437,45 @@ void sell_to_npc(fNPC& seller, Player& p)
     }
     
 }
+void help()
+{
+    std::cout<<"Вы можете:\nполечиться\nnоесть\ninfo\nвыкинуть\nснарядить";
+}
+void Player::prival()
+{
+    std::string command="";
+    while (command!="стоп")
+        {
+            std::cin>>command;
+            if (command=="полечиться")
+            {
+                if(healing(pray(0)))
+                    fatigue();
+            }
+            else if (command =="поесть")
+            {
+                std::cout<<"что вы хотите съесть?"<<std::endl;
+                print_invetory();
+                std::string snack;
+                std::cin>>snack;
+                have_a_dinner(snack);
+            }
+            else if (command == "выкинуть")
+                drop_food("хлеб");
+            else if (command == "info")
+                print_info();
+            else if (command =="/помощь")
+                help();
+            else if (command == "снарядить")
+            {
+                show_inv();
+                std::cout<<"Что вы хотите снарядить?\n";
+                std::string name;
+                std::getline(std::cin,name);
+                std::getline(std::cin,name);
+                equip(name);
+            }
+            
+        }
+    std::cout<<"Вы закончили привал и ложитесь спать, завтра вам предстоит долгий-долгий день....\n\n\n....\n\n\n";
+}
