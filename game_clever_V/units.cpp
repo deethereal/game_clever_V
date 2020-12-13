@@ -105,13 +105,13 @@ Player::Player()
     std::cout<<"Выберите расу"<<std::endl;
     for(int i=0;i<8;i++)
         std::cout<<races[i]<<" ";
-    std::cout<<"орк -- повышенная физ атака";
-    std::cout<<"дворф -- повышенная броня";
-    std::cout<<"гоблин -- увеличенное количество денег";
-    std::cout<<"эльф -- повышенная маг атака";
-    std::cout<<"тролль -- повышенное самоизлечение";
-    std::cout<<"драконоид -- повышенное здоровье";
-    std::cout<<"каджит -- больше начальной еды";
+    std::cout<<"\nорк -- повышенная физ атака\n";
+    std::cout<<"дворф -- повышенная броня\n";
+    std::cout<<"гоблин -- увеличенное количество денег\n";
+    std::cout<<"эльф -- повышенная маг атака\n";
+    std::cout<<"тролль -- повышенное самоизлечение\n";
+    std::cout<<"драконоид -- повышенное здоровье\n";
+    std::cout<<"каджит -- больше начальной еды\n";
     std::cout<<std::endl;
     std::string mb_race;
     int temp = -1;
@@ -282,10 +282,8 @@ inventory Enemy::E_is_alive(int g_damage, Player& p, int i) //функция с�
     inventory temp;
     if (health<=0)
     {
-        std::cout<<"цель мертва"<<std::endl;
         p.level.level_bar+=experience;
         p.level.lvlup();
-       
         p.level.progress(experience);
         if (p.level.is_new)
         {
@@ -294,7 +292,6 @@ inventory Enemy::E_is_alive(int g_damage, Player& p, int i) //функция с�
         }
         if (race=="гуманоид" or race=="зверь" or race=="БОСС" or race=="нeжить")
         {
-            std::cout<<"Из моба выпало"<<std::endl;
             temp=mob_drop();
         }
         std::cout<<"Кстати, с него выпало немного денег: "<<return_money()<<" монет\n";
@@ -473,7 +470,7 @@ void Player::equip(std::string thing)
     if (search1!=weapon.end())
     {
         
-        if (check(a_bag, search1->second) and add_item(search1->second))
+        if (check(a_bag, search1->second) and add_item(p_ar.first))
         {
             int idx=0;
             for (int i=0;i<a_bag.size();i++)
@@ -482,17 +479,16 @@ void Player::equip(std::string thing)
                     idx=i;
                     break;
                 }
-            a_bag[idx].count-=2;
+            a_bag[idx].count-=1;
             if (a_bag[idx].count==0)
                 a_bag.erase(a_bag.begin()+idx);
             carrying+=(search1->second).weight;
-            add_item(p_ar.first);
             p_ar.first=search1->second;
         }
     }
     else if (check(a_bag, search2->second) and search2!=armory.end())
     {
-        if (add_item(search2->second))
+        if (add_item(p_ar.second))
         {
             int idx=0;
             for (int i=0;i<a_bag.size();i++)
@@ -501,11 +497,10 @@ void Player::equip(std::string thing)
                     idx=i;
                     break;
                 }
-            a_bag[idx].count-=2;
+            a_bag[idx].count-=1;
             if (a_bag[idx].count==0)
                 a_bag.erase(a_bag.begin()+idx);
             carrying+=(search2->second).weight;
-            add_item(p_ar.second);
             p_ar.second=search2->second;
         }
     }
@@ -516,6 +511,7 @@ void Player::equip(std::string thing)
         
     
 }
+//!
 void Player::print_info()
 {
     std::cout<<std::endl;

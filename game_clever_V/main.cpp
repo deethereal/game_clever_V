@@ -4,7 +4,7 @@
 //
 //  Created by denis  on 15.10.2020.
 //  Copyright © 2020 denis . All rights reserved.
-//
+//check
 
 #include <iostream>
 #include "units.h"
@@ -84,6 +84,7 @@ int main()
             gnom.e_attack(player, gnom);//починить
             fight_pve(player, gnom,0);
         }
+        answer="н";
     }
     else if (answer!="н")
     {
@@ -96,10 +97,11 @@ int main()
         cout<<"Ну и задал ты этому гному\n ";
         
     }
-    else
+    else if (player.is_alive())
         cout<<"Как только гном увидел вас, то сразу же дал деру, вы даже не успели ничего понять\n";
     
-    
+    if (player.is_alive())
+    {
     print_s();//привал
     player.prival();
     cout<<"День второй\n\n";
@@ -130,5 +132,6 @@ int main()
     }
     }
     //РЕАЛИЗОВАТЬ КЛАСС fNPC и функцию trade
+    }
     return 0;
 }

@@ -61,7 +61,8 @@ void p_attack(Enemy& target, Player& p,int i)
             {
             if (flag==1)
             {
-            std::cout<<"\nЦЕЛЬ МЕРТВА\n"<<std::endl; //выяснить почему два раза выводится 
+            std::cout<<"\nЦЕЛЬ МЕРТВА\n"<<std::endl; //выяснить почему два раза выводится
+            std::cout<<"Из моба выпало:"<<std::endl; 
             mob_drop.show();
             std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или info, или стоп"<<std::endl;
             }
@@ -121,11 +122,15 @@ void p_attack(Enemy& target, Player& p,int i)
                 p.take_items(temp);
                 std::cout<<"\n";
                 delete_it(mob_drop, temp);
-                p.money_increase(target.return_money());
-                std::cout<<"\nТеперь у вас "<<p.return_money()<<" монет\n";
+                if (flag==1)
+                {
+                    p.money_increase(target.return_money());
+                    std::cout<<"\nТеперь у вас "<<p.return_money()<<" монет\n";
+                    flag=2;
+                }
             }
             else
-                input="-1";
+                input="стоп";
         }
         flag=1;
         }
