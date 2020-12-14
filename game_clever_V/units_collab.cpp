@@ -122,18 +122,20 @@ void p_attack(Enemy& target, Player& p,int i)
                 p.take_items(temp);
                 std::cout<<"\n";
                 delete_it(mob_drop, temp);
-                if (flag==1)
-                {
-                    p.money_increase(target.return_money());
-                    std::cout<<"\nТеперь у вас "<<p.return_money()<<" монет\n";
-                    flag=2;
-                }
+                
             }
             else
                 input="стоп";
         }
-        flag=1;
+        if (flag==0)
+            flag=1;
+        if (flag==1)
+        {
+        p.money_increase(target.return_money());
+        std::cout<<"\nТеперь у вас "<<p.return_money()<<" монет\n";
+        flag=2;
         }
+    }
         
 }
         
