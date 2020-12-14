@@ -25,7 +25,7 @@ void print_s()
     getline(lf,s);
     cout<<s<<"\n";
 }
-bool e_killed[1]={false};
+bool e_killed[2]={false, false};
 
 int main()
 {
@@ -111,17 +111,18 @@ int main()
     {
     if (answer=="д")
     {
+        fNPC torgash(100,{"fw"},2,{"хлеб","яблоко"},{100,59},{1,2},{"ветхая книга"},{4},{1});
         while (answer=="д")
         {
-            fNPC torgash(100,{"fw"},2,{"хлеб"},{100},{1},{"ветхая книга"},{4},{1});
             torgash.sell(player);
             cout<<endl;
             sell_to_npc( torgash, player);
             cout<<"Хотите продолжить торговать?\n";
             cin>>answer;
         }
-        print_s();//привал
+        cout<<"Вы падаете на привал, у вас есть время, чтобы отдхонуть и полечиться, введите \"стоп\", чтобы закончить првивал и /помощь, чтобы увидеть доступные вам команды";
         player.prival();
+        
         
         
     }
@@ -132,6 +133,35 @@ int main()
     }
     }
     //РЕАЛИЗОВАТЬ КЛАСС fNPC и функцию trade
+    }
+    if (player.is_alive())
+    {
+        print_s();//шпана
+        cin>>answer;
+        while (answer!="н")
+        {
+        if (answer=="д")
+        {
+            Enemy shapana("гуманоид",100, 42,30,"физ",5,3,"w",{"хлеб"}, {10},{"нож"},{2});
+            std::cout<<"Вы кричите низкими басом \"Э, отвалите от неe!\"\nЗа что сразу же получаете перо под ребро\n" ;
+            shapana.e_attack(player,shapana);//починить
+            fight_pve(player, shapana,1);
+            answer="н";
+        }
+        else if (answer!="н")
+        {
+            cout<<"Введите д/н\n";
+            cin>>answer;
+        }
+        }
+        if (e_killed[1])
+        {
+            cout<<"Девица посмотрела на вас удвиленным взглядом и недовольным тоном ответила \"Я бы и сама справилась!\"\n ";
+            
+        }
+        else if (player.is_alive())
+            cout<<"Вы делаете вид, что ничего не замечаете и проходите мимо\n";
+        
     }
     return 0;
 }

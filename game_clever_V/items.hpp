@@ -17,7 +17,7 @@
 class Item
 {
 protected:
-    float i_cost[4]={0.5,5,40,100};
+    float i_cost[6]={0.5,5,40,100,1,80};
     //int rarity;
 public:
     int weight;
@@ -39,10 +39,10 @@ public:
 class Weapon :public Armory
 {
 public:
-    std::string type[3]={"физ","маг","маг"};
-    std::string w_name[3]={"ржавый меч", "палка заклиналка", "ветхая книга"};
-    int w_strength [3] = {50,10,1};
-    int w_weight[3]={15,5,1};
+    std::string type[4]={"физ","маг","маг","физ"};
+    std::string w_name[4]={"ржавый меч", "палка заклиналка", "ветхая книга","нож"};
+    int w_strength [4] = {50,10,1,25};
+    int w_weight[4]={15,5,1,5};
     std::string type_of_dam;
     int strength;
     Weapon();
@@ -64,9 +64,9 @@ public:
 class Food:public Item
 {
 public:
-    int f_weight[1]={2};
-    int f_satiety[1]={5};
-    std::string f_name[1]={"хлеб"};
+    int f_weight[2]={2,1};
+    int f_satiety[2]={5,8};
+    std::string f_name[2]={"хлеб","яблоко"};
     Food();
     int satiety;
     Food(int name_i, int satiety_i, int weight_i,int abscost_id );

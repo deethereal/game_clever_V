@@ -24,8 +24,8 @@ extern int a_weight[3];
 extern std::string a_name[3];*/
 
 std::map <std::string, Armor> armory = {{"церковная роба", Armor(2,2)}, {"роба школы магии", Armor(1,2)}, {"комлпект железных доспехов", Armor(0,2)}};
-std::map <std::string, Weapon> weapon = {{"ветхая книга", Weapon(2,2)}, {"палка заклиналка", Weapon(1,2)}, {"ржавый меч", Weapon(0,3)}};
-std::map <std::string, Food> food_list={{"хлеб", Food(0,0,0,0)} };
+std::map <std::string, Weapon> weapon = {{"ветхая книга", Weapon(2,2)}, {"палка заклиналка", Weapon(1,2)}, {"ржавый меч", Weapon(0,3)}, {"нож", Weapon(3,5)} };
+std::map <std::string, Food> food_list={{"хлеб", Food(0,0,0,0)},{"яблоко", Food(1, 1, 1, 4)} };
 bool check(std::vector <Armory> vec, Armory shtuka)
 {
      
@@ -179,9 +179,14 @@ Player::Player()
         p_ar.first=weapon.find("ветхая книга")->second;
         p_ar.second=armory.find("церковная роба")->second;
     }
-    if (race=="каджит")
-        add_food(food_list.find("хлеб")->second);
+   
+        
     add_food(food_list.find("хлеб")->second);
+    f_bag[0].count++;
+    if (race=="каджит")
+    {
+        f_bag[0].count++;
+    }
     is_p=true;
 }
 fNPC::fNPC(int value, std::string type_drop,float coef, std::vector<std::string> drop_id_f, std::vector<int> f_count, std::vector<int> f_cost, std::vector<std::string> drop_id_w, std::vector<int> w_count, std::vector<int> w_cost,

@@ -59,15 +59,17 @@ void p_attack(Enemy& target, Player& p,int i)
             std::string input="info";
             while (input!="стоп")
             {
-            if (flag==1)
+            if (flag==0)
+                std::cout<<"\nЦЕЛЬ МЕРТВА\n"<<std::endl; 
+            if (flag!=0)
             {
-            std::cout<<"\nЦЕЛЬ МЕРТВА\n"<<std::endl; //выяснить почему два раза выводится
+            
             std::cout<<"Из моба выпало:"<<std::endl; 
             mob_drop.show();
             std::cout<<"Введите название вещей и количество, которое хотите взять(вещь-количество, и т.д.(не советую обманывать)) или info, или стоп"<<std::endl;
             }
                 std::getline(std::cin,input);
-            if (flag==1)
+            if (flag!=0)
             {
             while (input=="info")
             {
@@ -127,14 +129,15 @@ void p_attack(Enemy& target, Player& p,int i)
             else
                 input="стоп";
         }
-        if (flag==0)
-            flag=1;
+        
         if (flag==1)
         {
         p.money_increase(target.return_money());
         std::cout<<"\nТеперь у вас "<<p.return_money()<<" монет\n";
         flag=2;
         }
+        if (flag==0)
+            flag=1;
     }
         
 }
@@ -143,7 +146,7 @@ void p_attack(Enemy& target, Player& p,int i)
 }
 void Enemy::e_attack(Player& p, Enemy& e)
     {
-        p.get_damage(damage(p, e));
+        damage(p, e);
 
     }
 
@@ -312,11 +315,14 @@ void fNPC::sell(Player& p)
         }
         if (p.return_money()>=sum)
         {
-            p.money_decrease(sum);
-            money_increase(sum);
-            p.take_items(temp);
-            std::cout<<"\n";
-            delete_it(npc_inv, temp);
+           
+            if (p.take_items(temp))
+            {
+                p.money_decrease(sum);
+                money_increase(sum);
+                std::cout<<"\n";
+                delete_it(npc_inv, temp);
+            }
         }
         else{
             

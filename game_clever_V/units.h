@@ -131,7 +131,7 @@ protected:
     int hunger;
     
     bool add_item(Armory item);
-    void add_food(Food snack);
+    bool add_food(Food snack);
    
 
     
@@ -153,7 +153,7 @@ public:
     void level_up();
     void drop_food(std::string name);
     void have_a_dinner(std::string name);
-    void take_items(inventory from);
+    bool take_items(inventory from);
     void delete_part(inventory what);
     bool healing(int count);
     int pray(int target);  //target = 1, если враг,target= 0, если персонаж

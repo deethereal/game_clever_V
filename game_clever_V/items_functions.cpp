@@ -19,16 +19,17 @@ void delete_it(inventory& from, inventory what)
 {
     for (int i=0;i<from.f_part.size();i++)
         for (int j=0;j<what.f_part.size();j++)
-            if (what.f_part[i].name==from.f_part[j].name)
-                from.f_part[j].count-=what.f_part[i].count;
+            if (what.f_part[j].name==from.f_part[i].name)
+                from.f_part[i].count-=what.f_part[j].count;
+
     for (int i=0;i<from.a_part.size();i++)
         for (int j=0;j<what.a_part.size();j++)
-            if (what.a_part[i].name==from.a_part[j].name)
-                from.a_part[j].count-=what.a_part[i].count;
+            if (what.a_part[j].name==from.a_part[i].name)
+                from.a_part[i].count-=what.a_part[j].count;
     for (int i=0;i<from.w_part.size();i++)
         for (int j=0;j<what.w_part.size();j++)
-            if (what.w_part[i].name==from.w_part[j].name)
-                from.w_part[j].count-=what.w_part[i].count;
+            if (what.w_part[j].name==from.w_part[i].name)
+                from.w_part[i].count-=what.w_part[j].count;
 }
 
 
@@ -93,20 +94,28 @@ bool Player::add_item(Armory item)
     return false;
     
 }
-void Player::take_items(inventory from)
+bool Player::take_items(inventory from)
 {
     for (int i=0;i<from.f_part.size();i++)
-    {
-        for (int j=0;j<from.f_part[i].count;j++)
-            add_food(from.f_part[i]);
-    }
-    for (int i=0;i<from.a_part.size();i++)
-        add_item(from.a_part[i]);
-    for (int i=0;i<from.w_part.size();i++)
-        add_item(from.w_part[i]);
-    //print_invetory();
+            if (!add_food(from.f_part[i]))
+            {
+                return false;
+
+            }
+        for (int i=0;i<from.a_part.size();i++)
+            if (!add_item(from.a_part[i]))
+            {
+                return false;
+            }
+        for (int i=0;i<from.w_part.size();i++)
+            if (!add_item(from.w_part[i]))
+            {
+                return false;
+            }
+    
+    return true;
 }
-void Player::add_food(Food snack)
+bool Player::add_food(Food snack)
 {
     for (int i=0;i<f_bag.size();i++)
         if (snack.name==f_bag[i].name)
@@ -114,24 +123,23 @@ void Player::add_food(Food snack)
             if (carrying-snack.Food::weight>=0)
             {
                 carrying-=snack.Food::weight;
-                f_bag[i].count++;
+                f_bag[i].count+=snack.count;
                 
-                return;
+                return true;
             }
             else
                 std::cout<<"Вы не можете столько поднять"<<std::endl;
-            return;
+            return false;
         }
     if (carrying-snack.Food::weight>=0)
     {
         carrying-=snack.Food::weight;
         f_bag.push_back(snack);
-        f_bag.back().count++;
-        return;
+        return true;
     }
     else
         std::cout<<"Вы не можете столько поднять"<<std::endl;
-    return;
+    return false;
     
 }
 inventory Enemy::mob_drop()
