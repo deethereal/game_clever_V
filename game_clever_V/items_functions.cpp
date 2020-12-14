@@ -101,15 +101,9 @@ void Player::take_items(inventory from)
             add_food(from.f_part[i]);
     }
     for (int i=0;i<from.a_part.size();i++)
-    {
-        for (int j=0;j<from.a_part[i].count;j++)
-            add_item(from.a_part[i]);
-    }
+        add_item(from.a_part[i]);
     for (int i=0;i<from.w_part.size();i++)
-    {
-        for (int j=0;j<from.w_part[i].count;j++)
-            add_item(from.w_part[i]);
-    }
+        add_item(from.w_part[i]);
     //print_invetory();
 }
 void Player::add_food(Food snack)
